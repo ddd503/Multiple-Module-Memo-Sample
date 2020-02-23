@@ -21,7 +21,7 @@ protocol MemoItemDataStore {
                                         logicalType: NSCompoundPredicate.LogicalType,
                                         _ completion: (Result<[T], Error>) -> (Void))
 
-    func excute<R: NSPersistentStoreRequest>(request: R, _ completion: (Void) -> (Void))
+    func excute<R: NSPersistentStoreRequest>(request: R, _ completion: () -> ())
 
-    func delete<T: NSManagedObject>(object: T, _ completion: (Void) -> (Void))
+    func delete<T: NSManagedObject>(object: T, _ completion: () -> ())
 }
