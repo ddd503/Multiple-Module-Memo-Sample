@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D0E64E1A3F72C52F60119C6 /* MemoItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0E692DD2BC7AA191BF2B28 /* MemoItemRepository.swift */; };
 		45BC96FC2402280200445A53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC96FB2402280200445A53 /* AppDelegate.swift */; };
 		45BC96FE2402280200445A53 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC96FD2402280200445A53 /* SceneDelegate.swift */; };
 		45BC97002402280200445A53 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC96FF2402280200445A53 /* ViewController.swift */; };
@@ -15,6 +16,9 @@
 		45BC97082402280500445A53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45BC97072402280500445A53 /* Assets.xcassets */; };
 		45BC970B2402280500445A53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45BC97092402280500445A53 /* LaunchScreen.storyboard */; };
 		45BC97162402280500445A53 /* Multiple_Module_Memo_SampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC97152402280500445A53 /* Multiple_Module_Memo_SampleTests.swift */; };
+		45BC972A2402327F00445A53 /* Memo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC97282402327F00445A53 /* Memo+CoreDataClass.swift */; };
+		45BC972B2402327F00445A53 /* Memo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC97292402327F00445A53 /* Memo+CoreDataProperties.swift */; };
+		45BC972D240233A500445A53 /* MemoItemDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC972C240233A500445A53 /* MemoItemDataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D0E692DD2BC7AA191BF2B28 /* MemoItemRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoItemRepository.swift; sourceTree = "<group>"; };
 		45BC96F82402280200445A53 /* Multiple-Module-Memo-Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Multiple-Module-Memo-Sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BC96FB2402280200445A53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45BC96FD2402280200445A53 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +45,9 @@
 		45BC97112402280500445A53 /* Multiple-Module-Memo-SampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Multiple-Module-Memo-SampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BC97152402280500445A53 /* Multiple_Module_Memo_SampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Multiple_Module_Memo_SampleTests.swift; sourceTree = "<group>"; };
 		45BC97172402280500445A53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45BC97282402327F00445A53 /* Memo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Memo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		45BC97292402327F00445A53 /* Memo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Memo+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		45BC972C240233A500445A53 /* MemoItemDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoItemDataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,9 +137,37 @@
 		45BC97242402293100445A53 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				45BC97042402280200445A53 /* Multiple_Module_Memo_Sample.xcdatamodeld */,
+				45BC972724022BCE00445A53 /* Repository */,
+				45BC972624022BCA00445A53 /* DataStore */,
+				45BC972524022BC500445A53 /* Entity */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		45BC972524022BC500445A53 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				45BC97282402327F00445A53 /* Memo+CoreDataClass.swift */,
+				45BC97292402327F00445A53 /* Memo+CoreDataProperties.swift */,
+				45BC97042402280200445A53 /* Multiple_Module_Memo_Sample.xcdatamodeld */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		45BC972624022BCA00445A53 /* DataStore */ = {
+			isa = PBXGroup;
+			children = (
+				45BC972C240233A500445A53 /* MemoItemDataStore.swift */,
+			);
+			path = DataStore;
+			sourceTree = "<group>";
+		};
+		45BC972724022BCE00445A53 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				3D0E692DD2BC7AA191BF2B28 /* MemoItemRepository.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,7 +274,11 @@
 				45BC97002402280200445A53 /* ViewController.swift in Sources */,
 				45BC96FC2402280200445A53 /* AppDelegate.swift in Sources */,
 				45BC96FE2402280200445A53 /* SceneDelegate.swift in Sources */,
+				45BC972A2402327F00445A53 /* Memo+CoreDataClass.swift in Sources */,
 				45BC97062402280200445A53 /* Multiple_Module_Memo_Sample.xcdatamodeld in Sources */,
+				45BC972B2402327F00445A53 /* Memo+CoreDataProperties.swift in Sources */,
+				45BC972D240233A500445A53 /* MemoItemDataStore.swift in Sources */,
+				3D0E64E1A3F72C52F60119C6 /* MemoItemRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

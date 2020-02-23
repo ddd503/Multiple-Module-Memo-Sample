@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   version = "1.3">
+   <BuildAction>
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForRunning = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "45BC96F72402280200445A53"
+               BuildableName = "Multiple-Module-Memo-Sample.app"
+               BlueprintName = "Multiple-Module-Memo-Sample"
+               ReferencedContainer = "container:Multiple-Module-Memo-Sample.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <LaunchAction
+      useCustomWorkingDirectory = "NO"
+      buildConfiguration = "Debug"
+      allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "45BC96F72402280200445A53"
+            BuildableName = "Multiple-Module-Memo-Sample.app"
+            BlueprintName = "Multiple-Module-Memo-Sample"
+            ReferencedContainer = "container:Multiple-Module-Memo-Sample.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </LaunchAction>
+</Scheme>
