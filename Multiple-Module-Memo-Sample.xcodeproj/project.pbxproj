@@ -81,14 +81,10 @@
 		45BC96FA2402280200445A53 /* Multiple-Module-Memo-Sample */ = {
 			isa = PBXGroup;
 			children = (
-				45BC96FB2402280200445A53 /* AppDelegate.swift */,
-				45BC96FD2402280200445A53 /* SceneDelegate.swift */,
-				45BC96FF2402280200445A53 /* ViewController.swift */,
-				45BC97012402280200445A53 /* Main.storyboard */,
-				45BC97072402280500445A53 /* Assets.xcassets */,
-				45BC97092402280500445A53 /* LaunchScreen.storyboard */,
-				45BC970C2402280500445A53 /* Info.plist */,
-				45BC97042402280200445A53 /* Multiple_Module_Memo_Sample.xcdatamodeld */,
+				45BC97242402293100445A53 /* Model */,
+				45BC97232402290200445A53 /* View&Presenter */,
+				45BC9722240228FF00445A53 /* Startup */,
+				45BC9721240228FC00445A53 /* Other */,
 			);
 			path = "Multiple-Module-Memo-Sample";
 			sourceTree = "<group>";
@@ -100,6 +96,42 @@
 				45BC97172402280500445A53 /* Info.plist */,
 			);
 			path = "Multiple-Module-Memo-SampleTests";
+			sourceTree = "<group>";
+		};
+		45BC9721240228FC00445A53 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				45BC97072402280500445A53 /* Assets.xcassets */,
+				45BC970C2402280500445A53 /* Info.plist */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		45BC9722240228FF00445A53 /* Startup */ = {
+			isa = PBXGroup;
+			children = (
+				45BC96FB2402280200445A53 /* AppDelegate.swift */,
+				45BC96FD2402280200445A53 /* SceneDelegate.swift */,
+				45BC97092402280500445A53 /* LaunchScreen.storyboard */,
+			);
+			path = Startup;
+			sourceTree = "<group>";
+		};
+		45BC97232402290200445A53 /* View&Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				45BC96FF2402280200445A53 /* ViewController.swift */,
+				45BC97012402280200445A53 /* Main.storyboard */,
+			);
+			path = "View&Presenter";
+			sourceTree = "<group>";
+		};
+		45BC97242402293100445A53 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				45BC97042402280200445A53 /* Multiple_Module_Memo_Sample.xcdatamodeld */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -368,7 +400,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LVR5UQEHBD;
-				INFOPLIST_FILE = "Multiple-Module-Memo-Sample/Info.plist";
+				INFOPLIST_FILE = "Multiple-Module-Memo-Sample/Other/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -386,7 +418,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LVR5UQEHBD;
-				INFOPLIST_FILE = "Multiple-Module-Memo-Sample/Info.plist";
+				INFOPLIST_FILE = "Multiple-Module-Memo-Sample/Other/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
