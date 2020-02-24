@@ -5,3 +5,18 @@
 
 import Foundation
 
+protocol MemoDetailPresenterInputs {}
+
+protocol MemoDetailPresenterOutputs: class {
+    init(presenterInput: MemoListPresenterInputs)
+}
+
+final class MemoDetailPresenter: MemoDetailPresenterInputs {
+
+    weak var output: MemoDetailPresenterOutputs?
+    private let memoItemRepository: MemoItemRepository
+
+    init(memoItemRepository: MemoItemRepository) {
+        self.memoItemRepository = memoItemRepository
+    }
+}
