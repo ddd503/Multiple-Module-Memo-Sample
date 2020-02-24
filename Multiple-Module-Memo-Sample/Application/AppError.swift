@@ -11,4 +11,6 @@ enum CoreDataError: Error {
     case failedPrepareRequest
     case failedFetchRequest
     case failedExecuteStoreRequest
+    case notFoundContext
+    case failedFetchMemoById
 }

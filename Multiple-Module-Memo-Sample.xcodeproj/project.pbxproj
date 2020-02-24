@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3D0E60136B066817FD218EFD /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0E6C67080F558F633CF3C1 /* AppError.swift */; };
 		3D0E64E1A3F72C52F60119C6 /* MemoItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0E692DD2BC7AA191BF2B28 /* MemoItemRepository.swift */; };
+		3D0E653E9EFC347272570F48 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0E6D9D45B95C3B921E9446 /* String+.swift */; };
 		3D0E6FC812BF0246C91CCE00 /* CoreDataPropaties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0E692753D9A899933FA371 /* CoreDataPropaties.swift */; };
 		45BC96FC2402280200445A53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC96FB2402280200445A53 /* AppDelegate.swift */; };
 		45BC96FE2402280200445A53 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC96FD2402280200445A53 /* SceneDelegate.swift */; };
@@ -37,6 +38,7 @@
 		3D0E692753D9A899933FA371 /* CoreDataPropaties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataPropaties.swift; sourceTree = "<group>"; };
 		3D0E692DD2BC7AA191BF2B28 /* MemoItemRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoItemRepository.swift; sourceTree = "<group>"; };
 		3D0E6C67080F558F633CF3C1 /* AppError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		3D0E6D9D45B95C3B921E9446 /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		45BC96F82402280200445A53 /* Multiple-Module-Memo-Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Multiple-Module-Memo-Sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BC96FB2402280200445A53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45BC96FD2402280200445A53 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +82,14 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
+		3D0E6BE57CBDE7B3E8F4195B /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				3D0E6D9D45B95C3B921E9446 /* String+.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		45BC96EF2402280200445A53 = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +116,7 @@
 				45BC9722240228FF00445A53 /* Startup */,
 				45BC9721240228FC00445A53 /* Other */,
 				3D0E619005B21366DB649B45 /* Application */,
+				3D0E6BE57CBDE7B3E8F4195B /* Extension */,
 			);
 			path = "Multiple-Module-Memo-Sample";
 			sourceTree = "<group>";
@@ -295,6 +306,7 @@
 				3D0E64E1A3F72C52F60119C6 /* MemoItemRepository.swift in Sources */,
 				3D0E6FC812BF0246C91CCE00 /* CoreDataPropaties.swift in Sources */,
 				3D0E60136B066817FD218EFD /* AppError.swift in Sources */,
+				3D0E653E9EFC347272570F48 /* String+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
