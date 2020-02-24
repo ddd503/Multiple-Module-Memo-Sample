@@ -125,7 +125,7 @@ struct MemoItemRepositoryImpl: MemoItemRepository {
             switch result {
             case .success(let memos):
                 completion(memos.count)
-            case .failure(let _):
+            case .failure(_):
                 completion(0)
             }
         }
