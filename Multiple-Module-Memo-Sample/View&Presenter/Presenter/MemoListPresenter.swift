@@ -25,7 +25,7 @@ protocol MemoListPresenterOutputs: class {
 }
 
 final class MemoListPresenter: MemoListPresenterInputs {
-    
+
     weak var output: MemoListPresenterOutputs?
     let memoItemRepository: MemoItemRepository
     var tableViewEditing: Bool
@@ -43,8 +43,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
         self.tableViewEditing = tableViewEditing
         self.memoItems = memoItems
         self.showActionSheet = showActionSheet
-        NotificationCenter.default.addObserver(
-                self,
+        NotificationCenter.default.addObserver(self,
                 selector: #selector(didSaveMemo(_:)),
                 name: .NSManagedObjectContextDidSave,
                 object: nil)

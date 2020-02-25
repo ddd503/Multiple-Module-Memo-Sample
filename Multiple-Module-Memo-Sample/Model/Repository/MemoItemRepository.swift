@@ -96,7 +96,7 @@ struct MemoItemRepositoryImpl: MemoItemRepository {
             memo.content = text.afterSecondLine
             memo.editDate = Date()
         }
-        completion(.success(()))
+        completion(memoItemDataStore.save(context: context))
     }
 
     func deleteAllMemos(entityName: String, _ completion: (Result<Void, Error>) -> ()) {
