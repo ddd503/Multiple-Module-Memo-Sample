@@ -28,8 +28,13 @@ final class MemoListPresenter: MemoListPresenterInputs {
 
     weak var output: MemoListPresenterOutputs?
     let memoItemRepository: MemoItemRepository
-    var tableViewEditing: Bool
     var showActionSheet: (AlertEvent) -> ()
+    var tableViewEditing: Bool {
+        didSet {
+            // 編集モード切り替え
+            output?.updateButtonTitle(title: tableViewEditing ? "全て削除" : "メモ追加")
+        }
+    }
     var memoItems: [Memo] {
         didSet {
             // データソースが更新された通知
