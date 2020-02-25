@@ -115,7 +115,7 @@ struct MemoItemRepositoryImpl: MemoItemRepository {
                     completion(.success(()))
                 }
             case .failure(let error):
-                completion(.failure(CoreDataError.failedFetchMemoById))
+                completion(.failure(error))
             }
         }
     }

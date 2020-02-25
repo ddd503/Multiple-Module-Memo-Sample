@@ -5,18 +5,104 @@
 
 import Foundation
 
-protocol MemoListPresenterInputs {}
+protocol MemoListPresenterInputs {
+    var memoItemRepository: MemoItemRepository { get }
+    var tableViewEditing: Bool { get set }
+    var memoItems: [Memo] { get set }
+    var showActionSheet: (AlertEvent) -> () { get set }
+    func tappedUnderRightButton()
+    func deleteMemo(uniqueId: String)
+    func didSaveMemo(_ notification: Notification)
+}
 
 protocol MemoListPresenterOutputs: class {
     init(presenterInput: MemoListPresenterInputs)
+    func updateMemoList()
+    func transitionCreateMemo()
+    func transitionDetailMemo()
+    func updateButtonTitle(title: String)
+    func showErrorAlert(message: String?)
 }
 
 final class MemoListPresenter: MemoListPresenterInputs {
-
+    
     weak var output: MemoListPresenterOutputs?
-    private let memoItemRepository: MemoItemRepository
+    let memoItemRepository: MemoItemRepository
+    var tableViewEditing: Bool
+    var showActionSheet: (AlertEvent) -> ()
+    var memoItems: [Memo] {
+        didSet {
+            // データソースが更新された通知
+            output?.updateMemoList()
+        }
+    }
 
-    init(memoItemRepository: MemoItemRepository) {
+    init(memoItemRepository: MemoItemRepository, tableViewEditing: Bool,
+         memoItems: [Memo], showActionSheet: @escaping (AlertEvent) -> ()) {
         self.memoItemRepository = memoItemRepository
+        self.tableViewEditing = tableViewEditing
+        self.memoItems = memoItems
+        self.showActionSheet = showActionSheet
+        NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(didSaveMemo(_:)),
+                name: .NSManagedObjectContextDidSave,
+                object: nil)
+    }
+
+    func tappedUnderRightButton() {
+        guard tableViewEditing else { return }
+        // タップ時の結果を注入（タップ時はAlertEventが渡ってくる）
+        showActionSheet = { [weak self] event in
+            guard let self = self else { return }
+            switch event.actionType {
+            case .allDelete:
+                self.memoItemRepository.deleteAllMemos(entityName: "Memo") { result in
+                    switch result {
+                    case .success(_):
+                        self.memoItemRepository.readAllMemos { result in
+                            switch result {
+                            case .success(let memos):
+                                self.memoItems = memos
+                            case .failure(let error):
+                                self.output?.showErrorAlert(message: error.localizedDescription)
+                            }
+                        }
+                    case .failure(let error):
+                        self.output?.showErrorAlert(message: error.localizedDescription)
+                    }
+                }
+            case .cancel: break
+            }
+        }
+    }
+
+    func deleteMemo(uniqueId: String) {
+        memoItemRepository.deleteMemo(at: uniqueId) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(_):
+                self.memoItemRepository.readAllMemos { result in
+                    switch result {
+                    case .success(let memos):
+                        self.memoItems = memos
+                    case .failure(let error):
+                        self.output?.showErrorAlert(message: error.localizedDescription)
+                    }
+                }
+            case .failure(let error):
+                self.output?.showErrorAlert(message: error.localizedDescription)
+            }
+        }
+    }
+
+    @objc func didSaveMemo(_ notification: Notification) {
+        memoItemRepository.readAllMemos { result in
+            switch result {
+            case .success(let memos):
+                self.memoItems = memos
+            case .failure(_): break
+            }
+        }
     }
 }
