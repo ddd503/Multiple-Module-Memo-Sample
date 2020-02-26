@@ -13,13 +13,14 @@ protocol MemoListPresenterInputs {
     func tappedUnderRightButton()
     func deleteMemo(uniqueId: String)
     func didSaveMemo(_ notification: Notification)
+    func didSelectItem(indexPath: IndexPath)
 }
 
 protocol MemoListPresenterOutputs: class {
     init(presenterInput: MemoListPresenterInputs)
     func updateMemoList()
     func transitionCreateMemo()
-    func transitionDetailMemo()
+    func transitionDetailMemo(memo: Memo)
     func updateButtonTitle(title: String)
     func showErrorAlert(message: String?)
 }
@@ -29,7 +30,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
     weak var output: MemoListPresenterOutputs?
     let memoItemRepository: MemoItemRepository
     var showActionSheet: (AlertEvent) -> ()
-    var tableViewEditing: Bool {
+    var tableViewEditing = false {
         didSet {
             // 編集モード切り替え
             output?.updateButtonTitle(title: tableViewEditing ? "全て削除" : "メモ追加")
@@ -42,10 +43,8 @@ final class MemoListPresenter: MemoListPresenterInputs {
         }
     }
 
-    init(memoItemRepository: MemoItemRepository, tableViewEditing: Bool,
-         memoItems: [Memo], showActionSheet: @escaping (AlertEvent) -> ()) {
+    init(memoItemRepository: MemoItemRepository, memoItems: [Memo], showActionSheet: @escaping (AlertEvent) -> ()) {
         self.memoItemRepository = memoItemRepository
-        self.tableViewEditing = tableViewEditing
         self.memoItems = memoItems
         self.showActionSheet = showActionSheet
         NotificationCenter.default.addObserver(self,
@@ -55,29 +54,32 @@ final class MemoListPresenter: MemoListPresenterInputs {
     }
 
     func tappedUnderRightButton() {
-        guard tableViewEditing else { return }
-        // タップ時の結果を注入（タップ時はAlertEventが渡ってくる）
-        showActionSheet = { [weak self] event in
-            guard let self = self else { return }
-            switch event.actionType {
-            case .allDelete:
-                self.memoItemRepository.deleteAllMemos(entityName: "Memo") { result in
-                    switch result {
-                    case .success(_):
-                        self.memoItemRepository.readAllMemos { result in
-                            switch result {
-                            case .success(let memos):
-                                self.memoItems = memos
-                            case .failure(let error):
-                                self.output?.showErrorAlert(message: error.localizedDescription)
+        if tableViewEditing {
+            // タップ時の結果を注入（タップ時はAlertEventが渡ってくる）
+            showActionSheet = { [weak self] event in
+                guard let self = self else { return }
+                switch event.actionType {
+                case .allDelete:
+                    self.memoItemRepository.deleteAllMemos(entityName: "Memo") { result in
+                        switch result {
+                        case .success(_):
+                            self.memoItemRepository.readAllMemos { result in
+                                switch result {
+                                case .success(let memos):
+                                    self.memoItems = memos
+                                case .failure(let error):
+                                    self.output?.showErrorAlert(message: error.localizedDescription)
+                                }
                             }
+                        case .failure(let error):
+                            self.output?.showErrorAlert(message: error.localizedDescription)
                         }
-                    case .failure(let error):
-                        self.output?.showErrorAlert(message: error.localizedDescription)
                     }
+                case .cancel: break
                 }
-            case .cancel: break
             }
+        } else {
+            output?.transitionCreateMemo()
         }
     }
 
@@ -108,5 +110,9 @@ final class MemoListPresenter: MemoListPresenterInputs {
             case .failure(_): break
             }
         }
+    }
+
+    func didSelectItem(indexPath: IndexPath) {
+        output?.transitionDetailMemo(memo: memoItems[indexPath.row])
     }
 }
