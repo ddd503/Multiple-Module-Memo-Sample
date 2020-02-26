@@ -10,6 +10,8 @@ import UIKit
 
 final class MemoDetailViewController: UIViewController {
 
+    @IBOutlet weak private var textView: UITextView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
