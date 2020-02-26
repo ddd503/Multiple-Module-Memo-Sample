@@ -7,18 +7,19 @@ import Foundation
 
 protocol MemoListPresenterInputs {
     var memoItemRepository: MemoItemRepository { get }
-    var tableViewEditing: Bool { get set }
     var memoItems: [Memo] { get set }
     var showActionSheet: (AlertEvent) -> () { get set }
+    func bind(view: MemoListPresenterOutputs)
     func tappedUnderRightButton()
     func deleteMemo(uniqueId: String)
+    func didChangeTableViewEditing(_ editing: Bool)
     func didSaveMemo(_ notification: Notification)
     func didSelectItem(indexPath: IndexPath)
 }
 
 protocol MemoListPresenterOutputs: class {
-    init(presenterInput: MemoListPresenterInputs)
-    func updateMemoList()
+    init(presenterInputs: MemoListPresenterInputs)
+    func updateMemoList(_ memoItems: [Memo])
     func transitionCreateMemo()
     func transitionDetailMemo(memo: Memo)
     func updateButtonTitle(title: String)
@@ -27,19 +28,19 @@ protocol MemoListPresenterOutputs: class {
 
 final class MemoListPresenter: MemoListPresenterInputs {
 
-    weak var output: MemoListPresenterOutputs?
+    weak var view: MemoListPresenterOutputs?
     let memoItemRepository: MemoItemRepository
     var showActionSheet: (AlertEvent) -> ()
     var tableViewEditing = false {
         didSet {
             // 編集モード切り替え
-            output?.updateButtonTitle(title: tableViewEditing ? "全て削除" : "メモ追加")
+            view?.updateButtonTitle(title: tableViewEditing ? "全て削除" : "メモ追加")
         }
     }
     var memoItems: [Memo] {
         didSet {
             // データソースが更新された通知
-            output?.updateMemoList()
+            view?.updateMemoList(memoItems)
         }
     }
 
@@ -51,6 +52,10 @@ final class MemoListPresenter: MemoListPresenterInputs {
                 selector: #selector(didSaveMemo(_:)),
                 name: .NSManagedObjectContextDidSave,
                 object: nil)
+    }
+
+    func bind(view: MemoListPresenterOutputs) {
+        self.view = view
     }
 
     func tappedUnderRightButton() {
@@ -68,18 +73,18 @@ final class MemoListPresenter: MemoListPresenterInputs {
                                 case .success(let memos):
                                     self.memoItems = memos
                                 case .failure(let error):
-                                    self.output?.showErrorAlert(message: error.localizedDescription)
+                                    self.view?.showErrorAlert(message: error.localizedDescription)
                                 }
                             }
                         case .failure(let error):
-                            self.output?.showErrorAlert(message: error.localizedDescription)
+                            self.view?.showErrorAlert(message: error.localizedDescription)
                         }
                     }
                 case .cancel: break
                 }
             }
         } else {
-            output?.transitionCreateMemo()
+            view?.transitionCreateMemo()
         }
     }
 
@@ -93,13 +98,17 @@ final class MemoListPresenter: MemoListPresenterInputs {
                     case .success(let memos):
                         self.memoItems = memos
                     case .failure(let error):
-                        self.output?.showErrorAlert(message: error.localizedDescription)
+                        self.view?.showErrorAlert(message: error.localizedDescription)
                     }
                 }
             case .failure(let error):
-                self.output?.showErrorAlert(message: error.localizedDescription)
+                self.view?.showErrorAlert(message: error.localizedDescription)
             }
         }
+    }
+
+    func didChangeTableViewEditing(_ editing: Bool) {
+        tableViewEditing = editing
     }
 
     @objc func didSaveMemo(_ notification: Notification) {
@@ -113,6 +122,6 @@ final class MemoListPresenter: MemoListPresenterInputs {
     }
 
     func didSelectItem(indexPath: IndexPath) {
-        output?.transitionDetailMemo(memo: memoItems[indexPath.row])
+        view?.transitionDetailMemo(memo: memoItems[indexPath.row])
     }
 }

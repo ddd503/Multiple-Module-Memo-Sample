@@ -20,10 +20,87 @@ final class MemoListViewController: UIViewController {
         }
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    let presenterInputs: MemoListPresenterInputs
 
+    init(presenterInputs: MemoListPresenterInputs) {
+        self.presenterInputs = presenterInputs
+        super.init(nibName: "MemoListViewController", bundle: .main)
+        self.presenterInputs.bind(view: self)
     }
 
-    @IBAction func tappedUnderRightButton(sender: UIButton) {}
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // TBD
+    }
+
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        presenterInputs.didChangeTableViewEditing(editing)
+    }
+
+    @IBAction func tappedUnderRightButton(sender: UIButton) {
+        presenterInputs.tappedUnderRightButton()
+    }
+}
+
+extension MemoListViewController: MemoListPresenterOutputs {
+    func updateMemoList(_ memoItems: [Memo]) {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+            self?.countLabel.text = memoItems.isEmpty ? "メモなし" : "\(memoItems.count)件のメモ"
+            self?.emptyLabel.isHidden = !memoItems.isEmpty
+            if memoItems.isEmpty {
+                self?.setEditing(false, animated: true)
+            }
+        }
+    }
+
+    func transitionCreateMemo() {
+        // TBD
+    }
+
+    func transitionDetailMemo(memo: Memo) {
+        // TBD
+    }
+
+    func updateButtonTitle(title: String) {
+        DispatchQueue.main.async { [weak self] in
+            self?.underRightButton.setTitle(title, for: .normal)
+        }
+    }
+
+    func showErrorAlert(message: String?) {
+        // TBD
+    }
+}
+
+extension MemoListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return presenterInputs.memoItems.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: MemoInfoCell.identifier, for: indexPath) as! MemoInfoCell
+        cell.setInfo(memo: presenterInputs.memoItems[indexPath.row])
+        return cell
+    }
+}
+
+extension MemoListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenterInputs.didSelectItem(indexPath: indexPath)
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            guard let uniqueId = presenterInputs.memoItems[indexPath.row].uniqueId else { return }
+            presenterInputs.deleteMemo(uniqueId: uniqueId)
+        default: break
+        }
+    }
 }

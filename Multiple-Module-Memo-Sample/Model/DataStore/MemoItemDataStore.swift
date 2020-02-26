@@ -41,6 +41,7 @@ struct MemoItemDataStoreImpl: MemoItemDataStore {
         return completion(.success(object))
     }
 
+    @discardableResult
     func save(context: NSManagedObjectContext) -> Result<Void, Error> {
         if context.hasChanges {
             do {
@@ -66,12 +67,12 @@ struct MemoItemDataStoreImpl: MemoItemDataStore {
         fetchRequest.predicate = NSCompoundPredicate(type: logicalType, subpredicates: predicates)
 
         let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-                managedObjectContext: context,
-                sectionNameKeyPath: nil,
-                cacheName: nil)
+                                                           managedObjectContext: context,
+                                                           sectionNameKeyPath: nil,
+                                                           cacheName: nil)
 
         do {
-            try resultsController.fetchRequest
+            try resultsController.performFetch()
             completion(.success(resultsController.fetchedObjects ?? []))
         } catch {
             completion(.failure(CoreDataError.failedFetchRequest))

@@ -33,7 +33,7 @@ struct MemoItemRepositoryImpl: MemoItemRepository {
     func createMemoItem(text: String, uniqueId: String?, _ completion: (Result<Memo, Error>) -> ()) {
         memoItemDataStore.create(entityName: "Memo") { (result: Result<Memo, Error>) in 
             switch result {
-            case .success(var memo):
+            case .success(let memo):
                 guard let context = memo.managedObjectContext else {
                     completion(.failure(CoreDataError.notFoundContext))
                     return
