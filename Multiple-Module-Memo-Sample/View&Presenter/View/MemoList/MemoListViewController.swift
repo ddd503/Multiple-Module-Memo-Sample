@@ -32,6 +32,11 @@ final class MemoListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "メモリスト"
+    }
+
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         presenterInputs.didChangeTableViewEditing(editing)
@@ -56,21 +61,13 @@ extension MemoListViewController: MemoListPresenterOutputs {
 
     func transitionCreateMemo() {
         DispatchQueue.main.async { [weak self] in
-            let memoItemDataStore = MemoItemDataStoreImpl()
-            let memoItemRepository = MemoItemRepositoryImpl(memoItemDataStore: memoItemDataStore)
-            let memoDetailPresenter = MemoDetailPresenter(memoItemRepository: memoItemRepository, memoItem: nil)
-            let memoDetailVC = MemoDetailViewController(presenterInputs: memoDetailPresenter)
-            self?.navigationController?.pushViewController(memoDetailVC, animated: true)
+            self?.navigationController?.pushViewController(ViewControllerBuilder.buildMemoDetailVC(), animated: true)
         }
     }
 
     func transitionDetailMemo(memo: Memo) {
         DispatchQueue.main.async { [weak self] in
-            let memoItemDataStore = MemoItemDataStoreImpl()
-            let memoItemRepository = MemoItemRepositoryImpl(memoItemDataStore: memoItemDataStore)
-            let memoDetailPresenter = MemoDetailPresenter(memoItemRepository: memoItemRepository, memoItem: memo)
-            let memoDetailVC = MemoDetailViewController(presenterInputs: memoDetailPresenter)
-            self?.navigationController?.pushViewController(memoDetailVC, animated: true)
+            self?.navigationController?.pushViewController(ViewControllerBuilder.buildMemoDetailVC(memo: memo), animated: true)
         }
     }
 
@@ -79,10 +76,19 @@ extension MemoListViewController: MemoListPresenterOutputs {
             self?.underRightButton.setTitle(title, for: .normal)
         }
     }
-    
-    func catchError(message: String?) {
+
+    func showAllDeleteActionSheet() {
         DispatchQueue.main.async { [weak self] in
-            self?.showErrorAlert(message: message)
+            guard let self = self else { return }
+            self.showAlert(style: .actionSheet,
+                           actions: [AlertActionType.allDelete.event, AlertActionType.cancel.event],
+                           handler: self.presenterInputs.tappedActionSheet)
+        }
+    }
+    
+    func showErrorAlert(message: String?) {
+        DispatchQueue.main.async { [weak self] in
+            self?.showNormalErrorAlert(message: message)
         }
     }
 }

@@ -17,6 +17,7 @@ protocol MemoDetailPresenterInputs {
 protocol MemoDetailPresenterOutputs: class {
     init(presenterInputs: MemoDetailPresenterInputs)
     func setupText(_ initialText: String?)
+    func setupDoneButton()
     func returnMemoList()
     func showErrorAlert(message: String?)
 }
@@ -42,6 +43,7 @@ final class MemoDetailPresenter: MemoDetailPresenterInputs {
 
     func viewDidLoad() {
         view?.setupText((memoItem?.title ?? "") + "\n" + (memoItem?.content ?? ""))
+        view?.setupDoneButton()
     }
 
     func tappedDoneButton(textViewText: String) {

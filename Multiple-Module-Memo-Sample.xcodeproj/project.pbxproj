@@ -14,8 +14,8 @@
 		3D0E67EB9E3C4C8BE8924CE5 /* MemoDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0E6441FBF1E39B6B0BBCFE /* MemoDetailPresenter.swift */; };
 		3D0E6E8538171069B1506B56 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0E6DE7408F8AC4C6E6556F /* UIViewController+Alert.swift */; };
 		3D0E6FC812BF0246C91CCE00 /* CoreDataPropaties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0E692753D9A899933FA371 /* CoreDataPropaties.swift */; };
+		4562B6D624080372001FB8BA /* ViewControllerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4562B6D524080372001FB8BA /* ViewControllerBuilder.swift */; };
 		45BC96FC2402280200445A53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC96FB2402280200445A53 /* AppDelegate.swift */; };
-		45BC96FE2402280200445A53 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC96FD2402280200445A53 /* SceneDelegate.swift */; };
 		45BC97002402280200445A53 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC96FF2402280200445A53 /* ViewController.swift */; };
 		45BC97032402280200445A53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45BC97012402280200445A53 /* Main.storyboard */; };
 		45BC97062402280200445A53 /* Multiple_Module_Memo_Sample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 45BC97042402280200445A53 /* Multiple_Module_Memo_Sample.xcdatamodeld */; };
@@ -51,9 +51,9 @@
 		3D0E6D13766E558747A10358 /* MemoListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoListPresenter.swift; sourceTree = "<group>"; };
 		3D0E6D9D45B95C3B921E9446 /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		3D0E6DE7408F8AC4C6E6556F /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
+		4562B6D524080372001FB8BA /* ViewControllerBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerBuilder.swift; sourceTree = "<group>"; };
 		45BC96F82402280200445A53 /* Multiple-Module-Memo-Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Multiple-Module-Memo-Sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BC96FB2402280200445A53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		45BC96FD2402280200445A53 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		45BC96FF2402280200445A53 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		45BC97022402280200445A53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		45BC97052402280200445A53 /* Multiple_Module_Memo_Sample.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Multiple_Module_Memo_Sample.xcdatamodel; sourceTree = "<group>"; };
@@ -127,6 +127,14 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
+		4562B6D42408033C001FB8BA /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				4562B6D524080372001FB8BA /* ViewControllerBuilder.swift */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
 		45BC96EF2402280200445A53 = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +156,7 @@
 		45BC96FA2402280200445A53 /* Multiple-Module-Memo-Sample */ = {
 			isa = PBXGroup;
 			children = (
+				4562B6D42408033C001FB8BA /* DI */,
 				45BC97242402293100445A53 /* Model */,
 				45BC97232402290200445A53 /* View&Presenter */,
 				45BC9722240228FF00445A53 /* Startup */,
@@ -180,7 +189,6 @@
 			isa = PBXGroup;
 			children = (
 				45BC96FB2402280200445A53 /* AppDelegate.swift */,
-				45BC96FD2402280200445A53 /* SceneDelegate.swift */,
 				45BC97092402280500445A53 /* LaunchScreen.storyboard */,
 			);
 			path = Startup;
@@ -360,12 +368,12 @@
 			files = (
 				45BC97002402280200445A53 /* ViewController.swift in Sources */,
 				45BC96FC2402280200445A53 /* AppDelegate.swift in Sources */,
-				45BC96FE2402280200445A53 /* SceneDelegate.swift in Sources */,
 				45BC972A2402327F00445A53 /* Memo+CoreDataClass.swift in Sources */,
 				45BC97062402280200445A53 /* Multiple_Module_Memo_Sample.xcdatamodeld in Sources */,
 				45BC972B2402327F00445A53 /* Memo+CoreDataProperties.swift in Sources */,
 				45BC972D240233A500445A53 /* MemoItemDataStore.swift in Sources */,
 				3D0E64E1A3F72C52F60119C6 /* MemoItemRepository.swift in Sources */,
+				4562B6D624080372001FB8BA /* ViewControllerBuilder.swift in Sources */,
 				3D0E6FC812BF0246C91CCE00 /* CoreDataPropaties.swift in Sources */,
 				45BC97472406B41800445A53 /* MemoDetailViewController.swift in Sources */,
 				3D0E60136B066817FD218EFD /* AppError.swift in Sources */,
@@ -537,6 +545,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LVR5UQEHBD;
 				INFOPLIST_FILE = "Multiple-Module-Memo-Sample/Other/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -555,6 +564,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LVR5UQEHBD;
 				INFOPLIST_FILE = "Multiple-Module-Memo-Sample/Other/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

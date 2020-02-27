@@ -38,7 +38,7 @@ enum AlertActionType {
 extension UIViewController {
     func showAlert(title: String? = nil, message: String? = nil,
                    style: UIAlertController.Style, actions: [AlertEvent],
-                   _ handler: @escaping (AlertEvent) -> ()) {
+                   handler: @escaping (AlertEvent) -> ()) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
         actions.forEach { event in
             let action = UIAlertAction(title: event.title, style: event.style) { _ in
@@ -49,7 +49,7 @@ extension UIViewController {
         self.present(alert, animated: true)
     }
 
-    func showErrorAlert(message: String? = nil) {
+    func showNormalErrorAlert(message: String? = nil) {
         let message = message ?? "一時的な不具合が発生しました。\n一定時間待ってからお試しください。"
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         let close = UIAlertAction(title: "とじる", style: .default, handler: nil)

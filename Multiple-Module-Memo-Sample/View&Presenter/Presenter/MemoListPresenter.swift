@@ -8,7 +8,7 @@ import Foundation
 protocol MemoListPresenterInputs {
     var memoItemRepository: MemoItemRepository { get }
     var memoItems: [Memo] { get set }
-    var showActionSheet: (AlertEvent) -> () { get set }
+    var tappedActionSheet: (AlertEvent) -> () { get set }
     func bind(view: MemoListPresenterOutputs)
     func tappedUnderRightButton()
     func deleteMemo(uniqueId: String)
@@ -23,31 +23,55 @@ protocol MemoListPresenterOutputs: class {
     func transitionCreateMemo()
     func transitionDetailMemo(memo: Memo)
     func updateButtonTitle(title: String)
-    func catchError(message: String?)
+    func showAllDeleteActionSheet()
+    func showErrorAlert(message: String?)
 }
 
 final class MemoListPresenter: MemoListPresenterInputs {
 
     weak var view: MemoListPresenterOutputs?
     let memoItemRepository: MemoItemRepository
-    var showActionSheet: (AlertEvent) -> ()
+
     var tableViewEditing = false {
         didSet {
             // 編集モード切り替え
             view?.updateButtonTitle(title: tableViewEditing ? "全て削除" : "メモ追加")
         }
     }
-    var memoItems: [Memo] {
+
+    var memoItems: [Memo] = [] {
         didSet {
             // データソースが更新された通知
             view?.updateMemoList(memoItems)
         }
     }
 
-    init(memoItemRepository: MemoItemRepository, memoItems: [Memo], showActionSheet: @escaping (AlertEvent) -> ()) {
+    // タップ時の結果を注入（AlertEventが渡ってくる）
+    lazy var tappedActionSheet: (AlertEvent) -> () = { [weak self] event in
+        guard let self = self else { return }
+        switch event.actionType {
+        case .allDelete:
+            self.memoItemRepository.deleteAllMemos(entityName: "Memo") { result in
+                switch result {
+                case .success(_):
+                    self.memoItemRepository.readAllMemos { result in
+                        switch result {
+                        case .success(let memos):
+                            self.memoItems = memos
+                        case .failure(let error):
+                            self.view?.showErrorAlert(message: error.localizedDescription)
+                        }
+                    }
+                case .failure(let error):
+                    self.view?.showErrorAlert(message: error.localizedDescription)
+                }
+            }
+        case .cancel: break
+        }
+    }
+
+    init(memoItemRepository: MemoItemRepository) {
         self.memoItemRepository = memoItemRepository
-        self.memoItems = memoItems
-        self.showActionSheet = showActionSheet
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(didSaveMemo(_:)),
                                                name: .NSManagedObjectContextDidSave,
@@ -60,29 +84,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
 
     func tappedUnderRightButton() {
         if tableViewEditing {
-            // タップ時の結果を注入（タップ時はAlertEventが渡ってくる）
-            showActionSheet = { [weak self] event in
-                guard let self = self else { return }
-                switch event.actionType {
-                case .allDelete:
-                    self.memoItemRepository.deleteAllMemos(entityName: "Memo") { result in
-                        switch result {
-                        case .success(_):
-                            self.memoItemRepository.readAllMemos { result in
-                                switch result {
-                                case .success(let memos):
-                                    self.memoItems = memos
-                                case .failure(let error):
-                                    self.view?.catchError(message: error.localizedDescription)
-                                }
-                            }
-                        case .failure(let error):
-                            self.view?.catchError(message: error.localizedDescription)
-                        }
-                    }
-                case .cancel: break
-                }
-            }
+            view?.showAllDeleteActionSheet()
         } else {
             view?.transitionCreateMemo()
         }
@@ -98,15 +100,15 @@ final class MemoListPresenter: MemoListPresenterInputs {
                     case .success(let memos):
                         self.memoItems = memos
                     case .failure(let error):
-                        self.view?.catchError(message: error.localizedDescription)
+                        self.view?.showErrorAlert(message: error.localizedDescription)
                     }
                 }
             case .failure(let error):
-                self.view?.catchError(message: error.localizedDescription)
+                self.view?.showErrorAlert(message: error.localizedDescription)
             }
         }
     }
-
+    
     func didChangeTableViewEditing(_ editing: Bool) {
         tableViewEditing = editing
     }
