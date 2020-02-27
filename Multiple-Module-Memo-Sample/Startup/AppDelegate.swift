@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        MemoItemDataStoreImpl().save(context: CoreDataPropaties.shared.persistentContainer.viewContext)
+        MemoItemDataStoreImpl().save(context: CoreDataManager.shared.persistentContainer.viewContext)
     }
 }
 

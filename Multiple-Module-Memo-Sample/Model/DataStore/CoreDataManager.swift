@@ -5,11 +5,11 @@
 
 import CoreData
 
-final class CoreDataPropaties {
+final class CoreDataManager {
 
     private init() {}
 
-    static let shared = CoreDataPropaties()
+    static let shared = CoreDataManager()
 
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Multiple_Module_Memo_Sample")

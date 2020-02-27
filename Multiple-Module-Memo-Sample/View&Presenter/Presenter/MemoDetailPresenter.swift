@@ -28,6 +28,7 @@ final class MemoDetailPresenter: MemoDetailPresenterInputs {
     let memoItemRepository: MemoItemRepository
     let memoItem: Memo?
 
+    // memoItemがnilの場合、新規作成、ある場合は既存メモの編集
     init(memoItemRepository: MemoItemRepository, memoItem: Memo?) {
         self.memoItemRepository = memoItemRepository
         self.memoItem = memoItem

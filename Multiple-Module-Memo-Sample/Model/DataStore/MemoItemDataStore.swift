@@ -28,7 +28,7 @@ protocol MemoItemDataStore {
 
 struct MemoItemDataStoreImpl: MemoItemDataStore {
     func create<T>(entityName: String, _ completion: (Result<T, Error>) -> ()) where T : NSManagedObject {
-        let context = CoreDataPropaties.shared.persistentContainer.viewContext
+        let context = CoreDataManager.shared.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: entityName, in: context)
         guard let memoEntity = entity else {
             completion(.failure(CoreDataError.failedCreateEntity))
@@ -57,7 +57,7 @@ struct MemoItemDataStoreImpl: MemoItemDataStore {
                        sortKey: String, ascending: Bool,
                        logicalType: NSCompoundPredicate.LogicalType,
                        _ completion: (Result<[T], Error>) -> ()) where T : NSManagedObject {
-        let context = CoreDataPropaties.shared.persistentContainer.viewContext
+        let context = CoreDataManager.shared.persistentContainer.viewContext
         guard let fetchRequest: NSFetchRequest<T> = T.fetchRequest() as? NSFetchRequest<T> else {
             completion(.failure(CoreDataError.failedPrepareRequest))
             return
@@ -80,7 +80,7 @@ struct MemoItemDataStoreImpl: MemoItemDataStore {
     }
 
     func execute<R: NSPersistentStoreRequest>(request: R, _ completion: (Result<Void, Error>) -> ()) {
-        let context = CoreDataPropaties.shared.persistentContainer.viewContext
+        let context = CoreDataManager.shared.persistentContainer.viewContext
         do {
             try context.execute(request)
             return completion(.success(()))
@@ -90,7 +90,7 @@ struct MemoItemDataStoreImpl: MemoItemDataStore {
     }
 
     func delete<T>(object: T, _ completion: () -> ()) where T : NSManagedObject {
-        let context = CoreDataPropaties.shared.persistentContainer.viewContext
+        let context = CoreDataManager.shared.persistentContainer.viewContext
         context.performAndWait {
             context.delete(object)
             completion()
