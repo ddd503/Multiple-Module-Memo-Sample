@@ -10,6 +10,8 @@ protocol MemoListPresenterInputs {
     var memoItems: [Memo] { get set }
     var tappedActionSheet: (AlertEvent) -> () { get set }
     func bind(view: MemoListPresenterOutputs)
+    func viewDidLoad()
+    func viewWillAppear()
     func tappedUnderRightButton()
     func deleteMemo(uniqueId: String)
     func didChangeTableViewEditing(_ editing: Bool)
@@ -20,6 +22,7 @@ protocol MemoListPresenterInputs {
 protocol MemoListPresenterOutputs: class {
     init(presenterInputs: MemoListPresenterInputs)
     func updateMemoList(_ memoItems: [Memo])
+    func deselectRowIfNeeded()
     func transitionCreateMemo()
     func transitionDetailMemo(memo: Memo)
     func updateButtonTitle(title: String)
@@ -82,6 +85,21 @@ final class MemoListPresenter: MemoListPresenterInputs {
         self.view = view
     }
 
+    func viewDidLoad() {
+        memoItemRepository.readAllMemos { [weak self] result in
+            switch result {
+            case .success(let memos):
+                self?.memoItems = memos
+            case .failure(let error):
+                self?.view?.showErrorAlert(message: error.localizedDescription)
+            }
+        }
+    }
+
+    func viewWillAppear() {
+        view?.deselectRowIfNeeded()
+    }
+
     func tappedUnderRightButton() {
         if tableViewEditing {
             view?.showAllDeleteActionSheet()
@@ -114,10 +132,10 @@ final class MemoListPresenter: MemoListPresenterInputs {
     }
 
     @objc func didSaveMemo(_ notification: Notification) {
-        memoItemRepository.readAllMemos { result in
+        memoItemRepository.readAllMemos { [weak self] result in
             switch result {
             case .success(let memos):
-                self.memoItems = memos
+                self?.memoItems = memos
             case .failure(_): break
             }
         }

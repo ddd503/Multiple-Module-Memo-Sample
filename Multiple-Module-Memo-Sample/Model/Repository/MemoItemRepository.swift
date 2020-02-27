@@ -49,6 +49,7 @@ struct MemoItemRepositoryImpl: MemoItemRepository {
                             memo.uniqueId = "\(count)"
                         }
                     }
+                    self.memoItemDataStore.save(context: context)
                 }
                 completion(.success(memo))
             case .failure(let error):
@@ -59,30 +60,30 @@ struct MemoItemRepositoryImpl: MemoItemRepository {
 
     func readAllMemos(_ completion: (Result<[Memo], Error>) -> ()) {
         memoItemDataStore.fetchArray(
-                predicates: [],
-                sortKey: "editDate", 
-                ascending: false,
-                logicalType: .and) { (result: Result<[Memo], Error>) in
-            completion(result)
+            predicates: [],
+            sortKey: "editDate",
+            ascending: false,
+            logicalType: .and) { (result: Result<[Memo], Error>) in
+                completion(result)
         }
     }
 
     func readMemo(at uniqueId: String, _ completion: (Result<Memo, Error>) -> ()) {
         memoItemDataStore.fetchArray(
-                predicates: [NSPredicate(format: "uniqueId == %@",
-                uniqueId)], sortKey: "editDate",
-                ascending: false,
-                logicalType: .and) { (result: Result<[Memo], Error>) in
-            switch result {
-            case .success(let memos):
-                guard memos.isEmpty else {
-                    completion(.failure(CoreDataError.failedFetchMemoById))
-                    return
+            predicates: [NSPredicate(format: "uniqueId == %@", uniqueId)],
+            sortKey: "editDate",
+            ascending: false,
+            logicalType: .and) { (result: Result<[Memo], Error>) in
+                switch result {
+                case .success(let memos):
+                    guard !memos.isEmpty else {
+                        completion(.failure(CoreDataError.failedFetchMemoById))
+                        return
+                    }
+                    completion(.success(memos[0]))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
-                completion(.success(memos[0]))
-            case .failure(let error):
-                completion(.failure(error))
-            }
         }
     }
 

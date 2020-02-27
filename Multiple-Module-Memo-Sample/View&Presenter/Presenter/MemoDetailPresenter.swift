@@ -42,7 +42,8 @@ final class MemoDetailPresenter: MemoDetailPresenterInputs {
     }
 
     func viewDidLoad() {
-        view?.setupText((memoItem?.title ?? "") + "\n" + (memoItem?.content ?? ""))
+        let initialText = (memoItem == nil) ? "" : (memoItem?.title ?? "") + "\n" + (memoItem?.content ?? "")
+        view?.setupText(initialText)
         view?.setupDoneButton()
     }
 

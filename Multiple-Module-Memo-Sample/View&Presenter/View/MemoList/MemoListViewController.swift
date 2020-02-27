@@ -15,6 +15,8 @@ final class MemoListViewController: UIViewController {
     @IBOutlet weak private var emptyLabel: UILabel!
     @IBOutlet weak private var tableView: UITableView! {
         didSet {
+            tableView.dataSource = self
+            tableView.delegate = self
             tableView.register(MemoInfoCell.nib(), forCellReuseIdentifier: MemoInfoCell.identifier)
             tableView.tableFooterView = UIView()
         }
@@ -35,6 +37,12 @@ final class MemoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "メモリスト"
+        presenterInputs.viewDidLoad()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenterInputs.viewWillAppear()
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -55,6 +63,14 @@ extension MemoListViewController: MemoListPresenterOutputs {
             self?.emptyLabel.isHidden = !memoItems.isEmpty
             if memoItems.isEmpty {
                 self?.setEditing(false, animated: true)
+            }
+        }
+    }
+
+    func deselectRowIfNeeded() {
+        DispatchQueue.main.async { [weak self] in
+            if let indexPathForSelectedRow = self?.tableView.indexPathForSelectedRow {
+                self?.tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
             }
         }
     }
