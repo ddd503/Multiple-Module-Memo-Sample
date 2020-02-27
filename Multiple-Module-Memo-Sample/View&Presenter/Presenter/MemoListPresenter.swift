@@ -21,10 +21,12 @@ protocol MemoListPresenterInputs {
 
 protocol MemoListPresenterOutputs: class {
     init(presenterInputs: MemoListPresenterInputs)
+    func setupLayout()
     func updateMemoList(_ memoItems: [Memo])
     func deselectRowIfNeeded()
     func transitionCreateMemo()
     func transitionDetailMemo(memo: Memo)
+    func updateTableViewIsEditing(_ isEditing: Bool)
     func updateButtonTitle(title: String)
     func showAllDeleteActionSheet()
     func showErrorAlert(message: String?)
@@ -38,6 +40,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
     var tableViewEditing = false {
         didSet {
             // 編集モード切り替え
+            view?.updateTableViewIsEditing(tableViewEditing)
             view?.updateButtonTitle(title: tableViewEditing ? "全て削除" : "メモ追加")
         }
     }
@@ -86,6 +89,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
     }
 
     func viewDidLoad() {
+        view?.setupLayout()
         memoItemRepository.readAllMemos { [weak self] result in
             switch result {
             case .success(let memos):

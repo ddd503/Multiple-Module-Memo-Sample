@@ -36,7 +36,6 @@ final class MemoListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "メモリスト"
         presenterInputs.viewDidLoad()
     }
 
@@ -56,6 +55,13 @@ final class MemoListViewController: UIViewController {
 }
 
 extension MemoListViewController: MemoListPresenterOutputs {
+    func setupLayout() {
+        DispatchQueue.main.async { [weak self] in
+            self?.title = "メモリスト"
+            self?.navigationItem.rightBarButtonItem = self?.editButtonItem
+        }
+    }
+
     func updateMemoList(_ memoItems: [Memo]) {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
@@ -84,6 +90,12 @@ extension MemoListViewController: MemoListPresenterOutputs {
     func transitionDetailMemo(memo: Memo) {
         DispatchQueue.main.async { [weak self] in
             self?.navigationController?.pushViewController(ViewControllerBuilder.buildMemoDetailVC(memo: memo), animated: true)
+        }
+    }
+
+    func updateTableViewIsEditing(_ isEditing: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.isEditing = isEditing
         }
     }
 
