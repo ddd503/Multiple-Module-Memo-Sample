@@ -32,11 +32,6 @@ final class MemoListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // TBD
-    }
-
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         presenterInputs.didChangeTableViewEditing(editing)
@@ -60,11 +55,23 @@ extension MemoListViewController: MemoListPresenterOutputs {
     }
 
     func transitionCreateMemo() {
-        // TBD
+        DispatchQueue.main.async { [weak self] in
+            let memoItemDataStore = MemoItemDataStoreImpl()
+            let memoItemRepository = MemoItemRepositoryImpl(memoItemDataStore: memoItemDataStore)
+            let memoDetailPresenter = MemoDetailPresenter(memoItemRepository: memoItemRepository, memoItem: nil)
+            let memoDetailVC = MemoDetailViewController(presenterInputs: memoDetailPresenter)
+            self?.navigationController?.pushViewController(memoDetailVC, animated: true)
+        }
     }
 
     func transitionDetailMemo(memo: Memo) {
-        // TBD
+        DispatchQueue.main.async { [weak self] in
+            let memoItemDataStore = MemoItemDataStoreImpl()
+            let memoItemRepository = MemoItemRepositoryImpl(memoItemDataStore: memoItemDataStore)
+            let memoDetailPresenter = MemoDetailPresenter(memoItemRepository: memoItemRepository, memoItem: memo)
+            let memoDetailVC = MemoDetailViewController(presenterInputs: memoDetailPresenter)
+            self?.navigationController?.pushViewController(memoDetailVC, animated: true)
+        }
     }
 
     func updateButtonTitle(title: String) {
@@ -72,9 +79,11 @@ extension MemoListViewController: MemoListPresenterOutputs {
             self?.underRightButton.setTitle(title, for: .normal)
         }
     }
-
-    func showErrorAlert(message: String?) {
-        // TBD
+    
+    func catchError(message: String?) {
+        DispatchQueue.main.async { [weak self] in
+            self?.showErrorAlert(message: message)
+        }
     }
 }
 

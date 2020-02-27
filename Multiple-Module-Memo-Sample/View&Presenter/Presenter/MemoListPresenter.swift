@@ -23,7 +23,7 @@ protocol MemoListPresenterOutputs: class {
     func transitionCreateMemo()
     func transitionDetailMemo(memo: Memo)
     func updateButtonTitle(title: String)
-    func showErrorAlert(message: String?)
+    func catchError(message: String?)
 }
 
 final class MemoListPresenter: MemoListPresenterInputs {
@@ -49,9 +49,9 @@ final class MemoListPresenter: MemoListPresenterInputs {
         self.memoItems = memoItems
         self.showActionSheet = showActionSheet
         NotificationCenter.default.addObserver(self,
-                selector: #selector(didSaveMemo(_:)),
-                name: .NSManagedObjectContextDidSave,
-                object: nil)
+                                               selector: #selector(didSaveMemo(_:)),
+                                               name: .NSManagedObjectContextDidSave,
+                                               object: nil)
     }
 
     func bind(view: MemoListPresenterOutputs) {
@@ -73,11 +73,11 @@ final class MemoListPresenter: MemoListPresenterInputs {
                                 case .success(let memos):
                                     self.memoItems = memos
                                 case .failure(let error):
-                                    self.view?.showErrorAlert(message: error.localizedDescription)
+                                    self.view?.catchError(message: error.localizedDescription)
                                 }
                             }
                         case .failure(let error):
-                            self.view?.showErrorAlert(message: error.localizedDescription)
+                            self.view?.catchError(message: error.localizedDescription)
                         }
                     }
                 case .cancel: break
@@ -98,11 +98,11 @@ final class MemoListPresenter: MemoListPresenterInputs {
                     case .success(let memos):
                         self.memoItems = memos
                     case .failure(let error):
-                        self.view?.showErrorAlert(message: error.localizedDescription)
+                        self.view?.catchError(message: error.localizedDescription)
                     }
                 }
             case .failure(let error):
-                self.view?.showErrorAlert(message: error.localizedDescription)
+                self.view?.catchError(message: error.localizedDescription)
             }
         }
     }

@@ -48,4 +48,12 @@ extension UIViewController {
         }
         self.present(alert, animated: true)
     }
+
+    func showErrorAlert(message: String? = nil) {
+        let message = message ?? "一時的な不具合が発生しました。\n一定時間待ってからお試しください。"
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let close = UIAlertAction(title: "とじる", style: .default, handler: nil)
+        alert.addAction(close)
+        self.present(alert, animated: true)
+    }
 }

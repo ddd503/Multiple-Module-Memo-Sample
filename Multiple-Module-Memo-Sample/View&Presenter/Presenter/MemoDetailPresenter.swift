@@ -8,13 +8,14 @@ import Foundation
 protocol MemoDetailPresenterInputs {
     var memoItemRepository: MemoItemRepository { get }
     var memoItem: Memo? { get }
+    func bind(view: MemoDetailPresenterOutputs)
     func viewDidLoad()
     func tappedDoneButton(textViewText: String)
     func didSaveMemo(_ notification: Notification)
 }
 
 protocol MemoDetailPresenterOutputs: class {
-    init(presenterInput: MemoListPresenterInputs)
+    init(presenterInputs: MemoDetailPresenterInputs)
     func setupText(_ initialText: String?)
     func returnMemoList()
     func showErrorAlert(message: String?)
@@ -22,17 +23,25 @@ protocol MemoDetailPresenterOutputs: class {
 
 final class MemoDetailPresenter: MemoDetailPresenterInputs {
 
-    weak var output: MemoDetailPresenterOutputs?
+    weak var view: MemoDetailPresenterOutputs?
     let memoItemRepository: MemoItemRepository
     let memoItem: Memo?
 
     init(memoItemRepository: MemoItemRepository, memoItem: Memo?) {
         self.memoItemRepository = memoItemRepository
         self.memoItem = memoItem
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didSaveMemo(_:)),
+                                               name: .NSManagedObjectContextDidSave,
+                                               object: nil)
+    }
+
+    func bind(view: MemoDetailPresenterOutputs) {
+        self.view = view
     }
 
     func viewDidLoad() {
-        output?.setupText((memoItem?.title ?? "") + "\n" + (memoItem?.content ?? ""))
+        view?.setupText((memoItem?.title ?? "") + "\n" + (memoItem?.content ?? ""))
     }
 
     func tappedDoneButton(textViewText: String) {
@@ -42,7 +51,7 @@ final class MemoDetailPresenter: MemoDetailPresenterInputs {
                 switch result {
                 case .success(_): break
                 case .failure(let error):
-                    self?.output?.showErrorAlert(message: error.localizedDescription)
+                    self?.view?.showErrorAlert(message: error.localizedDescription)
                 }
             }
         } else {
@@ -51,13 +60,13 @@ final class MemoDetailPresenter: MemoDetailPresenterInputs {
                 switch result {
                 case .success(_): break
                 case .failure(let error):
-                   self?.output?.showErrorAlert(message: error.localizedDescription)
+                   self?.view?.showErrorAlert(message: error.localizedDescription)
                 }
             }
         }
     }
 
-    func didSaveMemo(_ notification: Notification) {
-        output?.returnMemoList()
+    @objc func didSaveMemo(_ notification: Notification) {
+        view?.returnMemoList()
     }
 }
