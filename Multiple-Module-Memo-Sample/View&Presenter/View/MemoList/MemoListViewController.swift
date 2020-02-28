@@ -56,7 +56,7 @@ final class MemoListViewController: UIViewController {
 
 extension MemoListViewController: MemoListPresenterOutputs {
     func setupLayout() {
-        title = "メモリスト"
+        title = "メモ"
         navigationItem.rightBarButtonItem = editButtonItem
     }
 
