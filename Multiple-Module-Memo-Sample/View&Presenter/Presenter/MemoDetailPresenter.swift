@@ -12,14 +12,17 @@ protocol MemoDetailPresenterInputs {
     func viewDidLoad()
     func tappedDoneButton(textViewText: String)
     func didSaveMemo(_ notification: Notification)
+    func didChangeTextView(_ text: String)
 }
 
 protocol MemoDetailPresenterOutputs: class {
     init(presenterInputs: MemoDetailPresenterInputs)
     func setupText(_ initialText: String?)
+    func setupTitle(_ title: String)
     func setupDoneButton()
     func returnMemoList()
     func showErrorAlert(message: String?)
+    func updateDoneButtonState(isEnabled: Bool)
 }
 
 final class MemoDetailPresenter: MemoDetailPresenterInputs {
@@ -45,6 +48,8 @@ final class MemoDetailPresenter: MemoDetailPresenterInputs {
     func viewDidLoad() {
         let initialText = (memoItem == nil) ? "" : (memoItem?.title ?? "") + "\n" + (memoItem?.content ?? "")
         view?.setupText(initialText)
+        let title = memoItem?.title ?? "新規メモ"
+        view?.setupTitle(title)
         view?.setupDoneButton()
     }
 
@@ -64,7 +69,7 @@ final class MemoDetailPresenter: MemoDetailPresenterInputs {
                 switch result {
                 case .success(_): break
                 case .failure(let error):
-                   self?.view?.showErrorAlert(message: error.localizedDescription)
+                    self?.view?.showErrorAlert(message: error.localizedDescription)
                 }
             }
         }
@@ -72,5 +77,9 @@ final class MemoDetailPresenter: MemoDetailPresenterInputs {
 
     @objc func didSaveMemo(_ notification: Notification) {
         view?.returnMemoList()
+    }
+
+    func didChangeTextView(_ text: String) {
+        view?.updateDoneButtonState(isEnabled: !text.isEmpty)
     }
 }

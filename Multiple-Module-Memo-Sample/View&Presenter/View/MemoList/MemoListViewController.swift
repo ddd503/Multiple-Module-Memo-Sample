@@ -56,10 +56,8 @@ final class MemoListViewController: UIViewController {
 
 extension MemoListViewController: MemoListPresenterOutputs {
     func setupLayout() {
-        DispatchQueue.main.async { [weak self] in
-            self?.title = "メモリスト"
-            self?.navigationItem.rightBarButtonItem = self?.editButtonItem
-        }
+        title = "メモリスト"
+        navigationItem.rightBarButtonItem = editButtonItem
     }
 
     func updateMemoList(_ memoItems: [Memo]) {
