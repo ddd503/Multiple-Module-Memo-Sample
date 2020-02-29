@@ -29,6 +29,7 @@
 		45BC97482406B41800445A53 /* MemoDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BC97462406B41800445A53 /* MemoDetailViewController.xib */; };
 		45BC974D2406B69500445A53 /* MemoInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC974B2406B69500445A53 /* MemoInfoCell.swift */; };
 		45BC974E2406B69500445A53 /* MemoInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45BC974C2406B69500445A53 /* MemoInfoCell.xib */; };
+		45EB4117240A6E730060A6EC /* MemoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB4116240A6E730060A6EC /* MemoInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		45BC97462406B41800445A53 /* MemoDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemoDetailViewController.xib; sourceTree = "<group>"; };
 		45BC974B2406B69500445A53 /* MemoInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoInfoCell.swift; sourceTree = "<group>"; };
 		45BC974C2406B69500445A53 /* MemoInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemoInfoCell.xib; sourceTree = "<group>"; };
+		45EB4116240A6E730060A6EC /* MemoInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 		45BC96FA2402280200445A53 /* Multiple-Module-Memo-Sample */ = {
 			isa = PBXGroup;
 			children = (
+				45EB4115240A6E4E0060A6EC /* ValueObject */,
 				4562B6D42408033C001FB8BA /* DI */,
 				45BC97242402293100445A53 /* Model */,
 				3D0E647EBA10BD8D023DF7C2 /* View */,
@@ -246,6 +249,14 @@
 				45BC97462406B41800445A53 /* MemoDetailViewController.xib */,
 			);
 			path = MemoDetail;
+			sourceTree = "<group>";
+		};
+		45EB4115240A6E4E0060A6EC /* ValueObject */ = {
+			isa = PBXGroup;
+			children = (
+				45EB4116240A6E730060A6EC /* MemoInfo.swift */,
+			);
+			path = ValueObject;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -353,6 +364,7 @@
 			files = (
 				45BC96FC2402280200445A53 /* AppDelegate.swift in Sources */,
 				45BC972A2402327F00445A53 /* Memo+CoreDataClass.swift in Sources */,
+				45EB4117240A6E730060A6EC /* MemoInfo.swift in Sources */,
 				45BC97062402280200445A53 /* Multiple_Module_Memo_Sample.xcdatamodeld in Sources */,
 				45BC972B2402327F00445A53 /* Memo+CoreDataProperties.swift in Sources */,
 				45BC972D240233A500445A53 /* MemoItemDataStore.swift in Sources */,
