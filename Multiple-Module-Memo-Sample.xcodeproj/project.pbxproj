@@ -154,7 +154,8 @@
 			children = (
 				4562B6D42408033C001FB8BA /* DI */,
 				45BC97242402293100445A53 /* Model */,
-				45BC97232402290200445A53 /* View&Presenter */,
+				3D0E647EBA10BD8D023DF7C2 /* View */,
+				3D0E6E4BF59D7CA8C001A02F /* Presenter */,
 				45BC9722240228FF00445A53 /* Startup */,
 				45BC9721240228FC00445A53 /* Other */,
 				3D0E619005B21366DB649B45 /* Util */,
@@ -188,15 +189,6 @@
 				45BC97092402280500445A53 /* LaunchScreen.storyboard */,
 			);
 			path = Startup;
-			sourceTree = "<group>";
-		};
-		45BC97232402290200445A53 /* View&Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				3D0E647EBA10BD8D023DF7C2 /* View */,
-				3D0E6E4BF59D7CA8C001A02F /* Presenter */,
-			);
-			path = "View&Presenter";
 			sourceTree = "<group>";
 		};
 		45BC97242402293100445A53 /* Model */ = {
