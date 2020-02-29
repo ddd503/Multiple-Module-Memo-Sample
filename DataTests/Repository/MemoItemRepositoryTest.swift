@@ -1,15 +1,14 @@
 //
-//  DataTests.swift
+//  MemoItemRepositoryTest.swift
 //  DataTests
 //
-//  Created by kawaharadai on 2020/02/29.
+//  Created by kawaharadai on 2020/03/01.
 //  Copyright © 2020 kawaharadai. All rights reserved.
 //
 
 import XCTest
-@testable import Data
 
-class DataTests: XCTestCase {
+class MemoItemRepositoryTest: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
