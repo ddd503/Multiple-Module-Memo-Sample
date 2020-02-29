@@ -32,8 +32,11 @@
 		45EB4117240A6E730060A6EC /* MemoInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB4116240A6E730060A6EC /* MemoInfo.swift */; };
 		45EB411A240A6F640060A6EC /* Translater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB4119240A6F640060A6EC /* Translater.swift */; };
 		45EB412B240A733F0060A6EC /* Data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 45EB4129240A733F0060A6EC /* Data.xcdatamodeld */; };
-		45EB412E240A73A10060A6EC /* MemoItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB412C240A73A10060A6EC /* MemoItem+CoreDataClass.swift */; };
-		45EB412F240A73A10060A6EC /* MemoItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB412D240A73A10060A6EC /* MemoItem+CoreDataProperties.swift */; };
+		45EB4131240A74370060A6EC /* MemoItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB4130240A74370060A6EC /* MemoItemRepository.swift */; };
+		45EB4132240A74AE0060A6EC /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0E6D9D45B95C3B921E9446 /* String+.swift */; };
+		45EB4134240A75390060A6EC /* MemoItemDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB4133240A75390060A6EC /* MemoItemDataStore.swift */; };
+		45EB4136240A75620060A6EC /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB4135240A75620060A6EC /* CoreDataManager.swift */; };
+		45EB4139240A75800060A6EC /* CoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EB4138240A75800060A6EC /* CoreDataError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,8 +92,10 @@
 		45EB4119240A6F640060A6EC /* Translater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translater.swift; sourceTree = "<group>"; };
 		45EB411F240A72D20060A6EC /* libData.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libData.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		45EB412A240A733F0060A6EC /* Data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Data.xcdatamodel; sourceTree = "<group>"; };
-		45EB412C240A73A10060A6EC /* MemoItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		45EB412D240A73A10060A6EC /* MemoItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		45EB4130240A74370060A6EC /* MemoItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoItemRepository.swift; sourceTree = "<group>"; };
+		45EB4133240A75390060A6EC /* MemoItemDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoItemDataStore.swift; sourceTree = "<group>"; };
+		45EB4135240A75620060A6EC /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		45EB4138240A75800060A6EC /* CoreDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,6 +306,7 @@
 		45EB4120240A72D20060A6EC /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				45EB4137240A75750060A6EC /* Error */,
 				45EB4128240A72E60060A6EC /* Repository */,
 				45EB4127240A72E40060A6EC /* DataStore */,
 				45EB4126240A72E10060A6EC /* Entity */,
@@ -311,8 +317,6 @@
 		45EB4126240A72E10060A6EC /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				45EB412C240A73A10060A6EC /* MemoItem+CoreDataClass.swift */,
-				45EB412D240A73A10060A6EC /* MemoItem+CoreDataProperties.swift */,
 				45EB4129240A733F0060A6EC /* Data.xcdatamodeld */,
 			);
 			path = Entity;
@@ -321,6 +325,8 @@
 		45EB4127240A72E40060A6EC /* DataStore */ = {
 			isa = PBXGroup;
 			children = (
+				45EB4133240A75390060A6EC /* MemoItemDataStore.swift */,
+				45EB4135240A75620060A6EC /* CoreDataManager.swift */,
 			);
 			path = DataStore;
 			sourceTree = "<group>";
@@ -328,8 +334,17 @@
 		45EB4128240A72E60060A6EC /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				45EB4130240A74370060A6EC /* MemoItemRepository.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		45EB4137240A75750060A6EC /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				45EB4138240A75800060A6EC /* CoreDataError.swift */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -490,9 +505,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45EB412E240A73A10060A6EC /* MemoItem+CoreDataClass.swift in Sources */,
-				45EB412F240A73A10060A6EC /* MemoItem+CoreDataProperties.swift in Sources */,
+				45EB4131240A74370060A6EC /* MemoItemRepository.swift in Sources */,
+				45EB4132240A74AE0060A6EC /* String+.swift in Sources */,
+				45EB4134240A75390060A6EC /* MemoItemDataStore.swift in Sources */,
+				45EB4136240A75620060A6EC /* CoreDataManager.swift in Sources */,
 				45EB412B240A733F0060A6EC /* Data.xcdatamodeld in Sources */,
+				45EB4139240A75800060A6EC /* CoreDataError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
