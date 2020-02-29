@@ -303,19 +303,19 @@
 			children = (
 				45EB4128240A72E60060A6EC /* Repository */,
 				45EB4127240A72E40060A6EC /* DataStore */,
-				45EB4126240A72E10060A6EC /* Entites */,
+				45EB4126240A72E10060A6EC /* Entity */,
 			);
 			path = Data;
 			sourceTree = "<group>";
 		};
-		45EB4126240A72E10060A6EC /* Entites */ = {
+		45EB4126240A72E10060A6EC /* Entity */ = {
 			isa = PBXGroup;
 			children = (
 				45EB412C240A73A10060A6EC /* MemoItem+CoreDataClass.swift */,
 				45EB412D240A73A10060A6EC /* MemoItem+CoreDataProperties.swift */,
 				45EB4129240A733F0060A6EC /* Data.xcdatamodeld */,
 			);
-			path = Entites;
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		45EB4127240A72E40060A6EC /* DataStore */ = {
