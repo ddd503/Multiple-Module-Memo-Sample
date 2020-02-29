@@ -22,7 +22,7 @@ final class MemoInfoCell: UITableViewCell {
         return UINib(nibName: identifier, bundle: .main)
     }
 
-    func setInfo(memo: MemoInfo) {
+    func setInfo(memo: Memo) {
         titleLabel.text = memo.title
         contentLabel.text = memo.content
         guard let editDate = memo.editDate else { return }

@@ -1,5 +1,5 @@
 //
-//  MemoInfo.swift
+//  Memo.swift
 //  Multiple-Module-Memo-Sample
 //
 //  Created by kawaharadai on 2020/02/29.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MemoInfo {
+struct Memo {
     let uniqueId: String
     let title: String
     let content: String

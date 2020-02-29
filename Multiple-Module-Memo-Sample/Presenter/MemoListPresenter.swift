@@ -4,10 +4,11 @@
 //
 
 import Foundation
+import Data
 
 protocol MemoListPresenterInputs {
     var memoItemRepository: MemoItemRepository { get }
-    var memoItems: [MemoInfo] { get set }
+    var memos: [Memo] { get set }
     var tappedActionSheet: (AlertEvent) -> () { get set }
     func bind(view: MemoListPresenterOutputs)
     func viewDidLoad()
@@ -22,10 +23,10 @@ protocol MemoListPresenterInputs {
 protocol MemoListPresenterOutputs: class {
     init(presenterInputs: MemoListPresenterInputs)
     func setupLayout()
-    func updateMemoList(_ memoItems: [MemoInfo])
+    func updateMemoList(_ memoItems: [Memo])
     func deselectRowIfNeeded()
     func transitionCreateMemo()
-    func transitionDetailMemo(memo: MemoInfo)
+    func transitionDetailMemo(memo: Memo)
     func updateTableViewIsEditing(_ isEditing: Bool)
     func updateButtonTitle(title: String)
     func showAllDeleteActionSheet()
@@ -45,10 +46,10 @@ final class MemoListPresenter: MemoListPresenterInputs {
         }
     }
 
-    var memoItems: [MemoInfo] = [] {
+    var memos: [Memo] = [] {
         didSet {
             // データソースが更新された通知
-            view?.updateMemoList(memoItems)
+            view?.updateMemoList(memos)
         }
     }
 
@@ -57,13 +58,13 @@ final class MemoListPresenter: MemoListPresenterInputs {
         guard let self = self else { return }
         switch event.actionType {
         case .allDelete:
-            self.memoItemRepository.deleteAllMemos(entityName: "Memo") { result in
+            self.memoItemRepository.deleteAllMemos(entityName: "MemoItem") { result in
                 switch result {
                 case .success(_):
                     self.memoItemRepository.readAllMemos { result in
                         switch result {
-                        case .success(let memos):
-                            self.memoItems = Translater.memosToMemoInfos(memos: memos)
+                        case .success(let memoItems):
+                            self.memos = Translater.memoItemsToMemos(memoItems: memoItems)
                         case .failure(let error):
                             self.view?.showErrorAlert(message: error.localizedDescription)
                         }
@@ -92,8 +93,8 @@ final class MemoListPresenter: MemoListPresenterInputs {
         view?.setupLayout()
         memoItemRepository.readAllMemos { [weak self] result in
             switch result {
-            case .success(let memos):
-                self?.memoItems = Translater.memosToMemoInfos(memos: memos)
+            case .success(let memoItems):
+                self?.memos = Translater.memoItemsToMemos(memoItems: memoItems)
             case .failure(let error):
                 self?.view?.showErrorAlert(message: error.localizedDescription)
             }
@@ -119,8 +120,8 @@ final class MemoListPresenter: MemoListPresenterInputs {
             case .success(_):
                 self.memoItemRepository.readAllMemos { result in
                     switch result {
-                    case .success(let memos):
-                        self.memoItems = Translater.memosToMemoInfos(memos: memos)
+                    case .success(let memoItems):
+                        self.memos = Translater.memoItemsToMemos(memoItems: memoItems)
                     case .failure(let error):
                         self.view?.showErrorAlert(message: error.localizedDescription)
                     }
@@ -138,14 +139,14 @@ final class MemoListPresenter: MemoListPresenterInputs {
     @objc func didSaveMemo(_ notification: Notification) {
         memoItemRepository.readAllMemos { [weak self] result in
             switch result {
-            case .success(let memos):
-                self?.memoItems = Translater.memosToMemoInfos(memos: memos)
+            case .success(let memoItems):
+                self?.memos = Translater.memoItemsToMemos(memoItems: memoItems)
             case .failure(_): break
             }
         }
     }
 
     func didSelectItem(indexPath: IndexPath) {
-        view?.transitionDetailMemo(memo: memoItems[indexPath.row])
+        view?.transitionDetailMemo(memo: memos[indexPath.row])
     }
 }

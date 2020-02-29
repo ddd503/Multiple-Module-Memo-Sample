@@ -60,7 +60,7 @@ extension MemoListViewController: MemoListPresenterOutputs {
         navigationItem.rightBarButtonItem = editButtonItem
     }
 
-    func updateMemoList(_ memoItems: [MemoInfo]) {
+    func updateMemoList(_ memoItems: [Memo]) {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
             self?.countLabel.text = memoItems.isEmpty ? "メモなし" : "\(memoItems.count)件のメモ"
@@ -85,7 +85,7 @@ extension MemoListViewController: MemoListPresenterOutputs {
         }
     }
 
-    func transitionDetailMemo(memo: MemoInfo) {
+    func transitionDetailMemo(memo: Memo) {
         DispatchQueue.main.async { [weak self] in
             self?.navigationController?.pushViewController(ViewControllerBuilder.buildMemoDetailVC(memo: memo), animated: true)
         }
@@ -121,12 +121,12 @@ extension MemoListViewController: MemoListPresenterOutputs {
 
 extension MemoListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenterInputs.memoItems.count
+        return presenterInputs.memos.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MemoInfoCell.identifier, for: indexPath) as! MemoInfoCell
-        cell.setInfo(memo: presenterInputs.memoItems[indexPath.row])
+        cell.setInfo(memo: presenterInputs.memos[indexPath.row])
         return cell
     }
 }
@@ -139,7 +139,7 @@ extension MemoListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
-            let uniqueId = presenterInputs.memoItems[indexPath.row].uniqueId
+            let uniqueId = presenterInputs.memos[indexPath.row].uniqueId
             presenterInputs.deleteMemo(uniqueId: uniqueId)
         default: break
         }

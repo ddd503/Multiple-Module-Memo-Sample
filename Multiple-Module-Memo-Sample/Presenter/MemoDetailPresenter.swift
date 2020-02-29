@@ -4,10 +4,11 @@
 //
 
 import Foundation
+import Data
 
 protocol MemoDetailPresenterInputs {
     var memoItemRepository: MemoItemRepository { get }
-    var memoItem: MemoInfo? { get }
+    var memoItem: Memo? { get }
     func bind(view: MemoDetailPresenterOutputs)
     func viewDidLoad()
     func tappedDoneButton(textViewText: String)
@@ -29,10 +30,10 @@ final class MemoDetailPresenter: MemoDetailPresenterInputs {
 
     weak var view: MemoDetailPresenterOutputs?
     let memoItemRepository: MemoItemRepository
-    let memoItem: MemoInfo?
+    let memoItem: Memo?
 
     // memoItemがnilの場合、新規作成、ある場合は既存メモの編集
-    init(memoItemRepository: MemoItemRepository, memoItem: MemoInfo?) {
+    init(memoItemRepository: MemoItemRepository, memoItem: Memo?) {
         self.memoItemRepository = memoItemRepository
         self.memoItem = memoItem
         NotificationCenter.default.addObserver(self,

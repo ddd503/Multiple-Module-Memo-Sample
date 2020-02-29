@@ -15,7 +15,13 @@ final class CoreDataManager {
     static let shared = CoreDataManager()
 
     lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Data")
+        guard let modelURL = Bundle(for: type(of: self)).url(forResource: "Data", withExtension:"momd") else {
+            fatalError("Error loading model from bundle")
+        }
+        guard let model = NSManagedObjectModel(contentsOf: modelURL) else {
+            fatalError("Error initializing mom from: \(modelURL)")
+        }
+        let container = NSPersistentContainer(name: "Data", managedObjectModel: model)
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
