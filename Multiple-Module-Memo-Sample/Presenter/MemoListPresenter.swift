@@ -7,7 +7,7 @@ import Foundation
 
 protocol MemoListPresenterInputs {
     var memoItemRepository: MemoItemRepository { get }
-    var memoItems: [Memo] { get set }
+    var memoItems: [MemoInfo] { get set }
     var tappedActionSheet: (AlertEvent) -> () { get set }
     func bind(view: MemoListPresenterOutputs)
     func viewDidLoad()
@@ -22,10 +22,10 @@ protocol MemoListPresenterInputs {
 protocol MemoListPresenterOutputs: class {
     init(presenterInputs: MemoListPresenterInputs)
     func setupLayout()
-    func updateMemoList(_ memoItems: [Memo])
+    func updateMemoList(_ memoItems: [MemoInfo])
     func deselectRowIfNeeded()
     func transitionCreateMemo()
-    func transitionDetailMemo(memo: Memo)
+    func transitionDetailMemo(memo: MemoInfo)
     func updateTableViewIsEditing(_ isEditing: Bool)
     func updateButtonTitle(title: String)
     func showAllDeleteActionSheet()
@@ -45,7 +45,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
         }
     }
 
-    var memoItems: [Memo] = [] {
+    var memoItems: [MemoInfo] = [] {
         didSet {
             // データソースが更新された通知
             view?.updateMemoList(memoItems)
@@ -63,7 +63,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
                     self.memoItemRepository.readAllMemos { result in
                         switch result {
                         case .success(let memos):
-                            self.memoItems = memos
+                            self.memoItems = Translater.memosToMemoInfos(memos: memos)
                         case .failure(let error):
                             self.view?.showErrorAlert(message: error.localizedDescription)
                         }
@@ -93,7 +93,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
         memoItemRepository.readAllMemos { [weak self] result in
             switch result {
             case .success(let memos):
-                self?.memoItems = memos
+                self?.memoItems = Translater.memosToMemoInfos(memos: memos)
             case .failure(let error):
                 self?.view?.showErrorAlert(message: error.localizedDescription)
             }
@@ -120,7 +120,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
                 self.memoItemRepository.readAllMemos { result in
                     switch result {
                     case .success(let memos):
-                        self.memoItems = memos
+                        self.memoItems = Translater.memosToMemoInfos(memos: memos)
                     case .failure(let error):
                         self.view?.showErrorAlert(message: error.localizedDescription)
                     }
@@ -139,7 +139,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
         memoItemRepository.readAllMemos { [weak self] result in
             switch result {
             case .success(let memos):
-                self?.memoItems = memos
+                self?.memoItems = Translater.memosToMemoInfos(memos: memos)
             case .failure(_): break
             }
         }

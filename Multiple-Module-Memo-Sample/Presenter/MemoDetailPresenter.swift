@@ -7,7 +7,7 @@ import Foundation
 
 protocol MemoDetailPresenterInputs {
     var memoItemRepository: MemoItemRepository { get }
-    var memoItem: Memo? { get }
+    var memoItem: MemoInfo? { get }
     func bind(view: MemoDetailPresenterOutputs)
     func viewDidLoad()
     func tappedDoneButton(textViewText: String)
@@ -29,10 +29,10 @@ final class MemoDetailPresenter: MemoDetailPresenterInputs {
 
     weak var view: MemoDetailPresenterOutputs?
     let memoItemRepository: MemoItemRepository
-    let memoItem: Memo?
+    let memoItem: MemoInfo?
 
     // memoItemがnilの場合、新規作成、ある場合は既存メモの編集
-    init(memoItemRepository: MemoItemRepository, memoItem: Memo?) {
+    init(memoItemRepository: MemoItemRepository, memoItem: MemoInfo?) {
         self.memoItemRepository = memoItemRepository
         self.memoItem = memoItem
         NotificationCenter.default.addObserver(self,
@@ -56,7 +56,7 @@ final class MemoDetailPresenter: MemoDetailPresenterInputs {
     func tappedDoneButton(textViewText: String) {
         if let memoItem = memoItem {
             // 既存メモの更新
-            memoItemRepository.updateMemo(memoItem, text: textViewText) { [weak self] result in
+            memoItemRepository.updateMemo(uniqueId: memoItem.uniqueId, text: textViewText) { [weak self] result in
                 switch result {
                 case .success(_): break
                 case .failure(let error):

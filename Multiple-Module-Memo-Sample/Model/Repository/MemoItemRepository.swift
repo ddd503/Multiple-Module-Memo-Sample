@@ -13,7 +13,7 @@ protocol MemoItemRepository {
 
     func readMemo(at uniqueId: String, _ completion: (Result<Memo, Error>) -> ())
 
-    func updateMemo(_ memo: Memo, text: String, _ completion: (Result<Void, Error>) -> ())
+    func updateMemo(uniqueId: String, text: String, _ completion: (Result<Void, Error>) -> ())
 
     func deleteAllMemos(entityName: String, _ completion: (Result<Void, Error>) -> ())
 
@@ -87,17 +87,24 @@ struct MemoItemRepositoryImpl: MemoItemRepository {
         }
     }
 
-    func updateMemo(_ memo: Memo, text: String, _ completion: (Result<Void, Error>) -> ()) {
-        guard let context = memo.managedObjectContext else {
-            completion(.failure(CoreDataError.notFoundContext))
-            return
+    func updateMemo(uniqueId: String, text: String, _ completion: (Result<Void, Error>) -> ()) {
+        readMemo(at: uniqueId) { result in
+            switch result {
+            case .success(let memo):
+                guard let context = memo.managedObjectContext else {
+                    completion(.failure(CoreDataError.notFoundContext))
+                    return
+                }
+                context.performAndWait {
+                    memo.title = text.firstLine
+                    memo.content = text.afterSecondLine
+                    memo.editDate = Date()
+                }
+                completion(memoItemDataStore.save(context: context))
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
-        context.performAndWait {
-            memo.title = text.firstLine
-            memo.content = text.afterSecondLine
-            memo.editDate = Date()
-        }
-        completion(memoItemDataStore.save(context: context))
     }
 
     func deleteAllMemos(entityName: String, _ completion: (Result<Void, Error>) -> ()) {

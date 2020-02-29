@@ -60,7 +60,7 @@ extension MemoListViewController: MemoListPresenterOutputs {
         navigationItem.rightBarButtonItem = editButtonItem
     }
 
-    func updateMemoList(_ memoItems: [Memo]) {
+    func updateMemoList(_ memoItems: [MemoInfo]) {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
             self?.countLabel.text = memoItems.isEmpty ? "メモなし" : "\(memoItems.count)件のメモ"
@@ -85,7 +85,7 @@ extension MemoListViewController: MemoListPresenterOutputs {
         }
     }
 
-    func transitionDetailMemo(memo: Memo) {
+    func transitionDetailMemo(memo: MemoInfo) {
         DispatchQueue.main.async { [weak self] in
             self?.navigationController?.pushViewController(ViewControllerBuilder.buildMemoDetailVC(memo: memo), animated: true)
         }
@@ -139,7 +139,7 @@ extension MemoListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
-            guard let uniqueId = presenterInputs.memoItems[indexPath.row].uniqueId else { return }
+            let uniqueId = presenterInputs.memoItems[indexPath.row].uniqueId
             presenterInputs.deleteMemo(uniqueId: uniqueId)
         default: break
         }
