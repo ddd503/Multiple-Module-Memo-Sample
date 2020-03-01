@@ -11,6 +11,7 @@ import CoreData
 @testable import Data
 
 class MemoItemDataStoreMock: MemoItemDataStore {
+
     var dummyDataBase: [MemoItem] = []
     var isSuccessFunc = true
     let testError = NSError(domain: "MemoItemDataStoreMock", code: 999, userInfo: nil)
