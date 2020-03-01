@@ -33,17 +33,17 @@ protocol MemoListPresenterOutputs: class {
 }
 
 final class MemoListPresenter: MemoListPresenterInputs {
-
+    
     weak var view: MemoListPresenterOutputs?
     let memoItemRepository: MemoItemRepository
-
+    
     var memos: [Memo] = [] {
         didSet {
             // データソースが更新された通知
             view?.updateMemoList(memos)
         }
     }
-
+    
     var tableViewEditing = false {
         didSet {
             // 編集モード切り替え
@@ -51,7 +51,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
             view?.updateButtonTitle(title: tableViewEditing ? "全て削除" : "メモ追加")
         }
     }
-
+    
     // タップ時の結果を注入（AlertEventが渡ってくる）
     lazy var tappedActionSheet: (AlertEvent) -> () = { [weak self] event in
         guard let self = self else { return }
@@ -75,7 +75,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
         case .cancel: break
         }
     }
-
+    
     init(memoItemRepository: MemoItemRepository) {
         self.memoItemRepository = memoItemRepository
         NotificationCenter.default.addObserver(self,
@@ -83,11 +83,11 @@ final class MemoListPresenter: MemoListPresenterInputs {
                                                name: .NSManagedObjectContextDidSave,
                                                object: nil)
     }
-
+    
     func bind(view: MemoListPresenterOutputs) {
         self.view = view
     }
-
+    
     func viewDidLoad() {
         view?.setupLayout()
         memoItemRepository.readAllMemoItems { [weak self] result in
@@ -99,11 +99,11 @@ final class MemoListPresenter: MemoListPresenterInputs {
             }
         }
     }
-
+    
     func viewWillAppear() {
         view?.deselectRowIfNeeded()
     }
-
+    
     func tappedUnderRightButton() {
         if tableViewEditing {
             view?.showAllDeleteActionSheet()
@@ -111,7 +111,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
             view?.transitionCreateMemo()
         }
     }
-
+    
     func deleteMemo(uniqueId: String) {
         memoItemRepository.deleteMemoItem(at: uniqueId) { [weak self] result in
             guard let self = self else { return }
@@ -130,7 +130,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
             }
         }
     }
-
+    
     @objc func didSaveMemo(_ notification: Notification) {
         memoItemRepository.readAllMemoItems { [weak self] result in
             switch result {
@@ -140,7 +140,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
             }
         }
     }
-
+    
     func didSelectItem(indexPath: IndexPath) {
         view?.transitionDetailMemo(memo: memos[indexPath.row])
     }

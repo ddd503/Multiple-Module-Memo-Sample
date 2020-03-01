@@ -11,7 +11,7 @@ struct AlertEvent {
     let message: String?
     let style: UIAlertAction.Style
     let actionType: AlertActionType
-
+    
     init(title: String? = nil, message: String? = nil, style: UIAlertAction.Style, actionType: AlertActionType) {
         self.title = title
         self.message = message
@@ -24,7 +24,7 @@ struct AlertEvent {
 enum AlertActionType {
     case allDelete
     case cancel
-
+    
     var event: AlertEvent {
         switch self {
         case .allDelete:
@@ -48,7 +48,7 @@ extension UIViewController {
         }
         self.present(alert, animated: true)
     }
-
+    
     func showNormalErrorAlert(message: String? = nil) {
         let message = message ?? "一時的な不具合が発生しました。\n一定時間待ってからお試しください。"
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)

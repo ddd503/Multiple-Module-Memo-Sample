@@ -13,7 +13,7 @@ struct Memo {
     let title: String
     let content: String
     let editDate: Date?
-
+    
     init(uniqueId: String?, title: String?, content: String?, editDate: Date?) {
         self.uniqueId = uniqueId ?? ""
         self.title = title ?? ""

@@ -13,9 +13,9 @@ import Data
 final class Translater {
     static func memoItemToMemo(memoItem: MemoItem) -> Memo {
         return Memo(uniqueId: memoItem.uniqueId,
-                        title: memoItem.title,
-                        content: memoItem.content,
-                        editDate: memoItem.editDate)
+                    title: memoItem.title,
+                    content: memoItem.content,
+                    editDate: memoItem.editDate)
     }
     
     static func memoItemsToMemos(memoItems: [MemoItem]) -> [Memo] {
