@@ -22,7 +22,7 @@ final class MemoListViewController: UIViewController {
         }
     }
 
-    let presenterInputs: MemoListPresenterInputs
+    var presenterInputs: MemoListPresenterInputs
 
     init(presenterInputs: MemoListPresenterInputs) {
         self.presenterInputs = presenterInputs
@@ -46,7 +46,7 @@ final class MemoListViewController: UIViewController {
 
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        presenterInputs.didChangeTableViewEditing(editing)
+        presenterInputs.tableViewEditing = editing
     }
 
     @IBAction func tappedUnderRightButton(sender: UIButton) {
@@ -60,12 +60,12 @@ extension MemoListViewController: MemoListPresenterOutputs {
         navigationItem.rightBarButtonItem = editButtonItem
     }
 
-    func updateMemoList(_ memoItems: [Memo]) {
+    func updateMemoList(_ memos: [Memo]) {
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
-            self?.countLabel.text = memoItems.isEmpty ? "メモなし" : "\(memoItems.count)件のメモ"
-            self?.emptyLabel.isHidden = !memoItems.isEmpty
-            if memoItems.isEmpty {
+            self?.countLabel.text = memos.isEmpty ? "メモなし" : "\(memos.count)件のメモ"
+            self?.emptyLabel.isHidden = !memos.isEmpty
+            if memos.isEmpty {
                 self?.setEditing(false, animated: true)
             }
         }

@@ -1,6 +1,6 @@
 //
 //  MemoItemRepositoryMock.swift
-//  DataTests
+//  Multiple-Module-Memo-SampleTests
 //
 //  Created by kawaharadai on 2020/03/01.
 //  Copyright © 2020 kawaharadai. All rights reserved.
@@ -13,7 +13,7 @@ class MemoItemRepositoryMock: MemoItemRepository {
 
     var dummyDataBase: [MemoItem] = []
     var isSuccessFunc = true
-    let testError = NSError(domain: "MemoItemDataStoreMock", code: 998, userInfo: nil)
+    let testError = NSError(domain: "MemoItemRepositoryMock", code: 998, userInfo: nil)
 
     func createMemoItem(text: String, uniqueId: String?, _ completion: (Result<MemoItem, Error>) -> ()) {
         let memoItem = MemoItemMock(
