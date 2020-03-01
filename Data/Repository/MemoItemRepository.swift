@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-protocol MemoItemRepository {
+public protocol MemoItemRepository {
     func createMemoItem(text: String, uniqueId: String?, _ completion: (Result<MemoItem, Error>) -> ())
 
     func readAllMemos(_ completion: (Result<[MemoItem], Error>) -> ())
@@ -25,43 +25,43 @@ protocol MemoItemRepository {
     func countAllMemos(_ completion: (Int) -> ())
 }
 
-struct MemoItemRepositoryImpl: MemoItemRepository {
+public struct MemoItemRepositoryImpl: MemoItemRepository {
 
     let memoItemDataStore: MemoItemDataStore
 
-    init(memoItemDataStore: MemoItemDataStore) {
+    public init(memoItemDataStore: MemoItemDataStore) {
         self.memoItemDataStore = memoItemDataStore
     }
 
-    func createMemoItem(text: String, uniqueId: String?, _ completion: (Result<MemoItem, Error>) -> ()) {
+    public func createMemoItem(text: String, uniqueId: String?, _ completion: (Result<MemoItem, Error>) -> ()) {
         memoItemDataStore.create(entityName: "MemoItem") { (result: Result<MemoItem, Error>) in
             switch result {
-            case .success(let memo):
-                guard let context = memo.managedObjectContext else {
+            case .success(let memoItem):
+                guard let context = memoItem.managedObjectContext else {
                     completion(.failure(CoreDataError.notFoundContext))
                     return
                 }
                 context.performAndWait {
-                    memo.title = text.firstLine
-                    memo.content = text.afterSecondLine
-                    memo.editDate = Date()
+                    memoItem.title = text.firstLine
+                    memoItem.content = text.afterSecondLine
+                    memoItem.editDate = Date()
                     if let uniqueId = uniqueId {
-                        memo.uniqueId = uniqueId
+                        memoItem.uniqueId = uniqueId
                     } else {
                         countAllMemos { count in
-                            memo.uniqueId = "\(count)"
+                            memoItem.uniqueId = "\(count)"
                         }
                     }
-                    self.memoItemDataStore.save(context: context)
+                    self.memoItemDataStore.save(object: memoItem)
                 }
-                completion(.success(memo))
+                completion(.success(memoItem))
             case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
 
-    func readAllMemos(_ completion: (Result<[MemoItem], Error>) -> ()) {
+    public func readAllMemos(_ completion: (Result<[MemoItem], Error>) -> ()) {
         memoItemDataStore.fetchArray(
             predicates: [],
             sortKey: "editDate",
@@ -71,46 +71,46 @@ struct MemoItemRepositoryImpl: MemoItemRepository {
         }
     }
 
-    func readMemo(at uniqueId: String, _ completion: (Result<MemoItem, Error>) -> ()) {
+    public func readMemo(at uniqueId: String, _ completion: (Result<MemoItem, Error>) -> ()) {
         memoItemDataStore.fetchArray(
             predicates: [NSPredicate(format: "uniqueId == %@", uniqueId)],
             sortKey: "editDate",
             ascending: false,
             logicalType: .and) { (result: Result<[MemoItem], Error>) in
                 switch result {
-                case .success(let memos):
-                    guard !memos.isEmpty else {
+                case .success(let memoItems):
+                    guard !memoItems.isEmpty else {
                         completion(.failure(CoreDataError.failedFetchMemoById))
                         return
                     }
-                    completion(.success(memos[0]))
+                    completion(.success(memoItems[0]))
                 case .failure(let error):
                     completion(.failure(error))
                 }
         }
     }
 
-    func updateMemo(uniqueId: String, text: String, _ completion: (Result<Void, Error>) -> ()) {
+    public func updateMemo(uniqueId: String, text: String, _ completion: (Result<Void, Error>) -> ()) {
         readMemo(at: uniqueId) { result in
             switch result {
-            case .success(let memo):
-                guard let context = memo.managedObjectContext else {
+            case .success(let memoItem):
+                guard let context = memoItem.managedObjectContext else {
                     completion(.failure(CoreDataError.notFoundContext))
                     return
                 }
                 context.performAndWait {
-                    memo.title = text.firstLine
-                    memo.content = text.afterSecondLine
-                    memo.editDate = Date()
+                    memoItem.title = text.firstLine
+                    memoItem.content = text.afterSecondLine
+                    memoItem.editDate = Date()
                 }
-                completion(memoItemDataStore.save(context: context))
+                completion(memoItemDataStore.save(object: memoItem))
             case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
 
-    func deleteAllMemos(entityName: String, _ completion: (Result<Void, Error>) -> ()) {
+    public func deleteAllMemos(entityName: String, _ completion: (Result<Void, Error>) -> ()) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         memoItemDataStore.execute(request: deleteRequest) { result in
@@ -118,11 +118,11 @@ struct MemoItemRepositoryImpl: MemoItemRepository {
         }
     }
 
-    func deleteMemo(at uniqueId: String, _ completion: (Result<Void, Error>) -> ()) {
+    public func deleteMemo(at uniqueId: String, _ completion: (Result<Void, Error>) -> ()) {
         readMemo(at: uniqueId) { result in
             switch result {
-            case .success(let memo):
-                memoItemDataStore.delete(object: memo) {
+            case .success(let memoItem):
+                memoItemDataStore.delete(object: memoItem) {
                     completion(.success(()))
                 }
             case .failure(let error):
@@ -131,11 +131,11 @@ struct MemoItemRepositoryImpl: MemoItemRepository {
         }
     }
 
-    func countAllMemos(_ completion: (Int) -> ()) {
+    public func countAllMemos(_ completion: (Int) -> ()) {
         readAllMemos { result in
             switch result {
-            case .success(let memos):
-                completion(memos.count)
+            case .success(let memoItems):
+                completion(memoItems.count)
             case .failure(_):
                 completion(0)
             }

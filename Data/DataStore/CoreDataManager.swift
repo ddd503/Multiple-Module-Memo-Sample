@@ -8,13 +8,13 @@
 
 import CoreData
 
-final class CoreDataManager {
-
+public final class CoreDataManager {
+    
     private init() {}
-
-    static let shared = CoreDataManager()
-
-    lazy var persistentContainer: NSPersistentContainer = {
+    
+    public static let shared = CoreDataManager()
+    
+    public lazy var persistentContainer: NSPersistentContainer = {
         guard let modelURL = Bundle(for: type(of: self)).url(forResource: "Data", withExtension:"momd") else {
             fatalError("Error loading model from bundle")
         }

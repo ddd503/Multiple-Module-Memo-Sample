@@ -15,7 +15,7 @@ final class ViewControllerBuilder {
         let memoListPresenter = MemoListPresenter(memoItemRepository: memoItemRepository)
         return MemoListViewController(presenterInputs: memoListPresenter)
     }
-
+    
     static func buildMemoDetailVC(memo: Memo? = nil) -> MemoDetailViewController {
         let memoItemDataStore = MemoItemDataStoreImpl()
         let memoItemRepository = MemoItemRepositoryImpl(memoItemDataStore: memoItemDataStore)

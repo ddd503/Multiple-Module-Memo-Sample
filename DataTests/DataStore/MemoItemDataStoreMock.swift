@@ -11,7 +11,6 @@ import CoreData
 @testable import Data
 
 class MemoItemDataStoreMock: MemoItemDataStore {
-
     var dummyDataBase: [MemoItem] = []
     var isSuccessFunc = true
     let testError = NSError(domain: "MemoItemDataStoreMock", code: 999, userInfo: nil)
@@ -21,8 +20,14 @@ class MemoItemDataStoreMock: MemoItemDataStore {
         isSuccessFunc ? completion(.success(memoItem)) : completion(.failure(testError))
     }
 
-    func save(context: NSManagedObjectContext) -> Result<Void, Error> {
-        return isSuccessFunc ? .success(()) : .failure(testError)
+    func save<T>(object: T) -> Result<Void, Error> where T : NSManagedObject {
+        if isSuccessFunc {
+            let memoItem = object as! MemoItem
+            dummyDataBase.append(memoItem)
+            return .success(())
+        } else {
+            return .failure(testError)
+        }
     }
 
     func fetchArray<T>(predicates: [NSPredicate],
