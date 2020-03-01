@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3D0E60136B066817FD218EFD /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0E6C67080F558F633CF3C1 /* AppError.swift */; };
 		3D0E653E9EFC347272570F48 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0E6D9D45B95C3B921E9446 /* String+.swift */; };
 		3D0E66D9726AA0624340F7C4 /* MemoListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0E6D13766E558747A10358 /* MemoListPresenter.swift */; };
 		3D0E67EB9E3C4C8BE8924CE5 /* MemoDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0E6441FBF1E39B6B0BBCFE /* MemoDetailPresenter.swift */; };
@@ -91,7 +90,6 @@
 
 /* Begin PBXFileReference section */
 		3D0E6441FBF1E39B6B0BBCFE /* MemoDetailPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoDetailPresenter.swift; sourceTree = "<group>"; };
-		3D0E6C67080F558F633CF3C1 /* AppError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		3D0E6D13766E558747A10358 /* MemoListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoListPresenter.swift; sourceTree = "<group>"; };
 		3D0E6D9D45B95C3B921E9446 /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		3D0E6DE7408F8AC4C6E6556F /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
@@ -165,14 +163,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3D0E619005B21366DB649B45 /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				3D0E6C67080F558F633CF3C1 /* AppError.swift */,
-			);
-			path = Util;
-			sourceTree = "<group>";
-		};
 		3D0E647EBA10BD8D023DF7C2 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,7 +230,6 @@
 				3D0E6E4BF59D7CA8C001A02F /* Presenter */,
 				45BC9722240228FF00445A53 /* Startup */,
 				45BC9721240228FC00445A53 /* Other */,
-				3D0E619005B21366DB649B45 /* Util */,
 				3D0E6BE57CBDE7B3E8F4195B /* Extension */,
 			);
 			path = "Multiple-Module-Memo-Sample";
@@ -584,7 +573,6 @@
 				45EB411A240A6F640060A6EC /* Translater.swift in Sources */,
 				4562B6D624080372001FB8BA /* ViewControllerBuilder.swift in Sources */,
 				45BC97472406B41800445A53 /* MemoDetailViewController.swift in Sources */,
-				3D0E60136B066817FD218EFD /* AppError.swift in Sources */,
 				3D0E653E9EFC347272570F48 /* String+.swift in Sources */,
 				45BC97432406B3E800445A53 /* MemoListViewController.swift in Sources */,
 				3D0E66D9726AA0624340F7C4 /* MemoListPresenter.swift in Sources */,
