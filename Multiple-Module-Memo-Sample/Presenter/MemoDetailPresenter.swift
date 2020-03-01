@@ -7,8 +7,6 @@ import Foundation
 import Data
 
 protocol MemoDetailPresenterInputs {
-    var memoItemRepository: MemoItemRepository { get }
-    var memoItem: Memo? { get }
     func bind(view: MemoDetailPresenterOutputs)
     func viewDidLoad()
     func tappedDoneButton(textViewText: String)
@@ -30,12 +28,12 @@ final class MemoDetailPresenter: MemoDetailPresenterInputs {
 
     weak var view: MemoDetailPresenterOutputs?
     let memoItemRepository: MemoItemRepository
-    let memoItem: Memo?
+    let memo: Memo?
 
     // memoItemがnilの場合、新規作成、ある場合は既存メモの編集
-    init(memoItemRepository: MemoItemRepository, memoItem: Memo?) {
+    init(memoItemRepository: MemoItemRepository, memo: Memo?) {
         self.memoItemRepository = memoItemRepository
-        self.memoItem = memoItem
+        self.memo = memo
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(didSaveMemo(_:)),
                                                name: .NSManagedObjectContextDidSave,
@@ -47,17 +45,17 @@ final class MemoDetailPresenter: MemoDetailPresenterInputs {
     }
 
     func viewDidLoad() {
-        let initialText = (memoItem == nil) ? "" : (memoItem?.title ?? "") + "\n" + (memoItem?.content ?? "")
+        let initialText = (memo == nil) ? "" : (memo?.title ?? "") + "\n" + (memo?.content ?? "")
         view?.setupText(initialText)
-        let title = memoItem?.title ?? "新規メモ"
+        let title = memo?.title ?? "新規メモ"
         view?.setupTitle(title)
         view?.setupDoneButton()
     }
 
     func tappedDoneButton(textViewText: String) {
-        if let memoItem = memoItem {
+        if let memo = memo {
             // 既存メモの更新
-            memoItemRepository.updateMemoItem(uniqueId: memoItem.uniqueId, text: textViewText) { [weak self] result in
+            memoItemRepository.updateMemoItem(uniqueId: memo.uniqueId, text: textViewText) { [weak self] result in
                 switch result {
                 case .success(_): break
                 case .failure(let error):

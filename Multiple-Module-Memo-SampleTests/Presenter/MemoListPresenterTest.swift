@@ -18,7 +18,7 @@ class MemoListPresenterTest: XCTestCase {
     }
 
     func test_memos_メモリスト更新時に適切なOutputが走るか() {
-        testExpectation = self.expectation(description: "メモリスト更新時に適切なOutputが走るか")
+        testExpectation = expectation(description: "メモリスト更新時に適切なOutputが走るか")
         let memoItemRepository = MemoItemRepositoryMock()
         let presenterInputs = MemoListPresenter(memoItemRepository: memoItemRepository)
         presenterInputs.bind(view: self)
@@ -35,7 +35,7 @@ class MemoListPresenterTest: XCTestCase {
     }
 
     func test_tableViewEditing_通常モードから編集モードへの切り替え時に適切なOutputが走るか() {
-        testExpectation = self.expectation(description: "通常モードから編集モードへの切り替え時に適切なOutputが走るか")
+        testExpectation = expectation(description: "通常モードから編集モードへの切り替え時に適切なOutputが走るか")
         testExpectation.expectedFulfillmentCount = 2
 
         let memoItemRepository = MemoItemRepositoryMock()
@@ -49,7 +49,7 @@ class MemoListPresenterTest: XCTestCase {
     }
 
     func test_tableViewEditing_編集モードから通常モードへの切り替え時に適切なOutputが走るか() {
-        testExpectation = self.expectation(description: "編集モードから通常モードへの切り替え時に適切なOutputが走るか")
+        testExpectation = expectation(description: "編集モードから通常モードへの切り替え時に適切なOutputが走るか")
         testExpectation.expectedFulfillmentCount = 2
 
         let memoItemRepository = MemoItemRepositoryMock()
@@ -64,7 +64,7 @@ class MemoListPresenterTest: XCTestCase {
     }
 
     func test_tappedActionSheet_アクションシートタップ時に適切なOutputが走るか() {
-        testExpectation = self.expectation(description: "アクションシートタップ時に適切なOutputが走るか")
+        testExpectation = expectation(description: "アクションシートタップ時に適切なOutputが走るか")
         let memoItemRepository = MemoItemRepositoryMock()
         memoItemRepository.dummyDataBase = [MemoItemMock(uniqueId: "1"),
                                             MemoItemMock(uniqueId: "2")]
@@ -79,7 +79,7 @@ class MemoListPresenterTest: XCTestCase {
     }
 
     func test_viewDidLoad_画面表示時viewDidLoadに適切なOutputが走るか() {
-        testExpectation = self.expectation(description: "画面表示時viewDidLoadに適切なOutputが走るか")
+        testExpectation = expectation(description: "画面表示時viewDidLoadに適切なOutputが走るか")
         // 2つの別々のOutputが完了することが成功条件
         testExpectation.expectedFulfillmentCount = 2
 
@@ -95,7 +95,7 @@ class MemoListPresenterTest: XCTestCase {
     }
 
     func test_viewWillAppear_画面表示時viewWillAppearに適切なOutputが走るか() {
-        testExpectation = self.expectation(description: "画面表示時viewWillAppearに適切なOutputが走るか")
+        testExpectation = expectation(description: "画面表示時viewWillAppearに適切なOutputが走るか")
 
         let memoItemRepository = MemoItemRepositoryMock()
         let presenterInputs = MemoListPresenter(memoItemRepository: memoItemRepository)
@@ -107,7 +107,7 @@ class MemoListPresenterTest: XCTestCase {
     }
 
     func test_tappedUnderRightButton_右下ボタンタップ時に適切なOutputが走るか_編集モード時() {
-        testExpectation = self.expectation(description: "右下ボタンタップ時に適切なOutputが走るか_編集モード時")
+        testExpectation = expectation(description: "右下ボタンタップ時に適切なOutputが走るか_編集モード時")
 
         let memoItemRepository = MemoItemRepositoryMock()
         let presenterInputs = MemoListPresenter(memoItemRepository: memoItemRepository)
@@ -121,7 +121,7 @@ class MemoListPresenterTest: XCTestCase {
     }
 
     func test_tappedUnderRightButton_右下ボタンタップ時に適切なOutputが走るか_非編集モード時() {
-        testExpectation = self.expectation(description: "右下ボタンタップ時に適切なOutputが走るか_非編集モード時")
+        testExpectation = expectation(description: "右下ボタンタップ時に適切なOutputが走るか_非編集モード時")
 
         let memoItemRepository = MemoItemRepositoryMock()
         let presenterInputs = MemoListPresenter(memoItemRepository: memoItemRepository)
@@ -133,7 +133,7 @@ class MemoListPresenterTest: XCTestCase {
     }
 
     func test_deleteMemo_メモ削除動作時に適切なOutputが走るか() {
-        testExpectation = self.expectation(description: "メモ削除動作時に適切なOutputが走るか")
+        testExpectation = expectation(description: "メモ削除動作時に適切なOutputが走るか")
         let memoItemRepository = MemoItemRepositoryMock()
         let dummyUniqueId1 = "1000"
         let dummyUniqueId2 = "2000"
@@ -149,19 +149,19 @@ class MemoListPresenterTest: XCTestCase {
     }
 
     func test_didSaveMemo_メモ保存完了時に適切なOutputが走るか() {
-        testExpectation = self.expectation(description: "メモ保存完了時に適切なOutputが走るか")
+        testExpectation = expectation(description: "メモ保存完了時に適切なOutputが走るか")
         let memoItemRepository = MemoItemRepositoryMock()
         memoItemRepository.dummyDataBase = [MemoItemMock(uniqueId: "2000")]
         let presenterInputs = MemoListPresenter(memoItemRepository: memoItemRepository)
         presenterInputs.bind(view: self)
 
-        presenterInputs.didSaveMemo(Notification(name: .NSManagedObjectContextDidSave))
+        NotificationCenter.default.post(Notification(name: .NSManagedObjectContextDidSave))
 
         wait(for: [testExpectation], timeout: 1.0)
     }
 
     func test_didSelectItem_既存メモタップ時に適切なOutputが走るか() {
-        testExpectation = self.expectation(description: "既存メモタップ時に適切なOutputが走るか")
+        testExpectation = expectation(description: "既存メモタップ時に適切なOutputが走るか")
         let memoItemRepository = MemoItemRepositoryMock()
         let presenterInputs = MemoListPresenter(memoItemRepository: memoItemRepository)
         let dummyUniqueId1 = "10"
@@ -182,7 +182,7 @@ class MemoListPresenterTest: XCTestCase {
     }
 
     func test_showErrorAlert_異常系であるメモの削除に失敗した時に適切なOutputが走るか() {
-        testExpectation = self.expectation(description: "異常系であるメモの削除に失敗した時に適切なOutputが走るか")
+        testExpectation = expectation(description: "異常系であるメモの削除に失敗した時に適切なOutputが走るか")
         let memoItemRepository = MemoItemRepositoryMock()
         memoItemRepository.isSuccessFunc = false
 

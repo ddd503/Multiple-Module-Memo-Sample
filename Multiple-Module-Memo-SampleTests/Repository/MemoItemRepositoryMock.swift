@@ -21,7 +21,14 @@ class MemoItemRepositoryMock: MemoItemRepository {
             title: text.firstLine,
             content: text.afterSecondLine,
             editDate: nil)
-        isSuccessFunc ? completion(.success(memoItem)) : completion(.failure(testError))
+
+        if isSuccessFunc {
+            dummyDataBase.append(memoItem)
+            NotificationCenter.default.post(Notification(name: .NSManagedObjectContextDidSave))
+            completion(.success(memoItem))
+        } else {
+            completion(.failure(testError))
+        }
     }
 
     func readAllMemoItems(_ completion: (Result<[MemoItem], Error>) -> ()) {
@@ -37,7 +44,13 @@ class MemoItemRepositoryMock: MemoItemRepository {
         let updateMemoItem = dummyDataBase.filter { $0.uniqueId == uniqueId }.first!
         updateMemoItem.title = text.firstLine
         updateMemoItem.content = text.afterSecondLine
-        isSuccessFunc ? completion(.success(())) : completion(.failure(testError))
+
+        if isSuccessFunc {
+            NotificationCenter.default.post(Notification(name: .NSManagedObjectContextDidSave))
+            completion(.success(()))
+        } else {
+            completion(.failure(testError))
+        }
     }
 
     func deleteAllMemoItems(entityName: String, _ completion: (Result<Void, Error>) -> ()) {
