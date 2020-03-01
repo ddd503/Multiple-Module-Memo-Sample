@@ -16,8 +16,8 @@ class MemoItemMock: MemoItem {
     var contentText: String?
     var editMemoDate: Date?
 
-    convenience init(uniqueId: String = "", title: String?,
-                     content: String?, editDate: Date?) {
+    convenience init(uniqueId: String = "", title: String? = nil,
+                     content: String? = nil, editDate: Date? = nil) {
         self.init()
         self.id = uniqueId
         self.titleText = title

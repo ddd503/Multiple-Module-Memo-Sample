@@ -57,7 +57,7 @@ final class MemoDetailPresenter: MemoDetailPresenterInputs {
     func tappedDoneButton(textViewText: String) {
         if let memoItem = memoItem {
             // 既存メモの更新
-            memoItemRepository.updateMemo(uniqueId: memoItem.uniqueId, text: textViewText) { [weak self] result in
+            memoItemRepository.updateMemoItem(uniqueId: memoItem.uniqueId, text: textViewText) { [weak self] result in
                 switch result {
                 case .success(_): break
                 case .failure(let error):

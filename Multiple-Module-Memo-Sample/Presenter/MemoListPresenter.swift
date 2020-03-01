@@ -58,10 +58,10 @@ final class MemoListPresenter: MemoListPresenterInputs {
         guard let self = self else { return }
         switch event.actionType {
         case .allDelete:
-            self.memoItemRepository.deleteAllMemos(entityName: "MemoItem") { result in
+            self.memoItemRepository.deleteAllMemoItems(entityName: "MemoItem") { result in
                 switch result {
                 case .success(_):
-                    self.memoItemRepository.readAllMemos { result in
+                    self.memoItemRepository.readAllMemoItems { result in
                         switch result {
                         case .success(let memoItems):
                             self.memos = Translater.memoItemsToMemos(memoItems: memoItems)
@@ -91,7 +91,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
 
     func viewDidLoad() {
         view?.setupLayout()
-        memoItemRepository.readAllMemos { [weak self] result in
+        memoItemRepository.readAllMemoItems { [weak self] result in
             switch result {
             case .success(let memoItems):
                 self?.memos = Translater.memoItemsToMemos(memoItems: memoItems)
@@ -114,11 +114,11 @@ final class MemoListPresenter: MemoListPresenterInputs {
     }
 
     func deleteMemo(uniqueId: String) {
-        memoItemRepository.deleteMemo(at: uniqueId) { [weak self] result in
+        memoItemRepository.deleteMemoItem(at: uniqueId) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(_):
-                self.memoItemRepository.readAllMemos { result in
+                self.memoItemRepository.readAllMemoItems { result in
                     switch result {
                     case .success(let memoItems):
                         self.memos = Translater.memoItemsToMemos(memoItems: memoItems)
@@ -137,7 +137,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
     }
 
     @objc func didSaveMemo(_ notification: Notification) {
-        memoItemRepository.readAllMemos { [weak self] result in
+        memoItemRepository.readAllMemoItems { [weak self] result in
             switch result {
             case .success(let memoItems):
                 self?.memos = Translater.memoItemsToMemos(memoItems: memoItems)
