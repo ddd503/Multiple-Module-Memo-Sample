@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+import Data
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,7 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        MemoItemDataStoreImpl().save(context: CoreDataManager.shared.persistentContainer.viewContext)
+        let result = MemoItemDataStoreImpl().save(context: CoreDataManager.shared.persistentContainer.viewContext)
+        switch result {
+        case .success(_): break
+        case .failure(let error):
+            print("Error: applicationWillTerminate_\(error.localizedDescription)")
+        }
     }
 }
-

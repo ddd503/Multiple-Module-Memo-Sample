@@ -121,12 +121,12 @@ extension MemoListViewController: MemoListPresenterOutputs {
 
 extension MemoListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenterInputs.memoItems.count
+        return presenterInputs.memos.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MemoInfoCell.identifier, for: indexPath) as! MemoInfoCell
-        cell.setInfo(memo: presenterInputs.memoItems[indexPath.row])
+        cell.setInfo(memo: presenterInputs.memos[indexPath.row])
         return cell
     }
 }
@@ -139,7 +139,7 @@ extension MemoListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
-            guard let uniqueId = presenterInputs.memoItems[indexPath.row].uniqueId else { return }
+            let uniqueId = presenterInputs.memos[indexPath.row].uniqueId
             presenterInputs.deleteMemo(uniqueId: uniqueId)
         default: break
         }

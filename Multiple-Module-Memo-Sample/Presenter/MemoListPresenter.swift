@@ -4,10 +4,11 @@
 //
 
 import Foundation
+import Data
 
 protocol MemoListPresenterInputs {
     var memoItemRepository: MemoItemRepository { get }
-    var memoItems: [Memo] { get set }
+    var memos: [Memo] { get set }
     var tappedActionSheet: (AlertEvent) -> () { get set }
     func bind(view: MemoListPresenterOutputs)
     func viewDidLoad()
@@ -45,10 +46,10 @@ final class MemoListPresenter: MemoListPresenterInputs {
         }
     }
 
-    var memoItems: [Memo] = [] {
+    var memos: [Memo] = [] {
         didSet {
             // データソースが更新された通知
-            view?.updateMemoList(memoItems)
+            view?.updateMemoList(memos)
         }
     }
 
@@ -57,13 +58,13 @@ final class MemoListPresenter: MemoListPresenterInputs {
         guard let self = self else { return }
         switch event.actionType {
         case .allDelete:
-            self.memoItemRepository.deleteAllMemos(entityName: "Memo") { result in
+            self.memoItemRepository.deleteAllMemoItems(entityName: "MemoItem") { result in
                 switch result {
                 case .success(_):
-                    self.memoItemRepository.readAllMemos { result in
+                    self.memoItemRepository.readAllMemoItems { result in
                         switch result {
-                        case .success(let memos):
-                            self.memoItems = memos
+                        case .success(let memoItems):
+                            self.memos = Translater.memoItemsToMemos(memoItems: memoItems)
                         case .failure(let error):
                             self.view?.showErrorAlert(message: error.localizedDescription)
                         }
@@ -90,10 +91,10 @@ final class MemoListPresenter: MemoListPresenterInputs {
 
     func viewDidLoad() {
         view?.setupLayout()
-        memoItemRepository.readAllMemos { [weak self] result in
+        memoItemRepository.readAllMemoItems { [weak self] result in
             switch result {
-            case .success(let memos):
-                self?.memoItems = memos
+            case .success(let memoItems):
+                self?.memos = Translater.memoItemsToMemos(memoItems: memoItems)
             case .failure(let error):
                 self?.view?.showErrorAlert(message: error.localizedDescription)
             }
@@ -113,14 +114,14 @@ final class MemoListPresenter: MemoListPresenterInputs {
     }
 
     func deleteMemo(uniqueId: String) {
-        memoItemRepository.deleteMemo(at: uniqueId) { [weak self] result in
+        memoItemRepository.deleteMemoItem(at: uniqueId) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(_):
-                self.memoItemRepository.readAllMemos { result in
+                self.memoItemRepository.readAllMemoItems { result in
                     switch result {
-                    case .success(let memos):
-                        self.memoItems = memos
+                    case .success(let memoItems):
+                        self.memos = Translater.memoItemsToMemos(memoItems: memoItems)
                     case .failure(let error):
                         self.view?.showErrorAlert(message: error.localizedDescription)
                     }
@@ -136,16 +137,16 @@ final class MemoListPresenter: MemoListPresenterInputs {
     }
 
     @objc func didSaveMemo(_ notification: Notification) {
-        memoItemRepository.readAllMemos { [weak self] result in
+        memoItemRepository.readAllMemoItems { [weak self] result in
             switch result {
-            case .success(let memos):
-                self?.memoItems = memos
+            case .success(let memoItems):
+                self?.memos = Translater.memoItemsToMemos(memoItems: memoItems)
             case .failure(_): break
             }
         }
     }
 
     func didSelectItem(indexPath: IndexPath) {
-        view?.transitionDetailMemo(memo: memoItems[indexPath.row])
+        view?.transitionDetailMemo(memo: memos[indexPath.row])
     }
 }

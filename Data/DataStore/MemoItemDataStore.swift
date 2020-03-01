@@ -1,33 +1,35 @@
 //
 //  MemoItemDataStore.swift
-//  Multiple-Module-Memo-Sample
+//  Data
 //
-//  Created by kawaharadai on 2020/02/23.
+//  Created by kawaharadai on 2020/02/29.
 //  Copyright © 2020 kawaharadai. All rights reserved.
 //
 
-import Foundation
 import CoreData
 
-protocol MemoItemDataStore {
+public protocol MemoItemDataStore {
     func create<T: NSManagedObject>(entityName: String, _ completion: (Result<T, Error>) -> ())
-
+    
     @discardableResult
-    func save(context: NSManagedObjectContext) -> Result<Void, Error>
-
+    func save<T: NSManagedObject>(object: T) -> Result<Void, Error>
+    
     func fetchArray<T: NSManagedObject>(predicates: [NSPredicate],
                                         sortKey: String,
                                         ascending: Bool,
                                         logicalType: NSCompoundPredicate.LogicalType,
                                         _ completion: (Result<[T], Error>) -> ())
-
+    
     func execute<R: NSPersistentStoreRequest>(request: R, _ completion: (Result<Void, Error>) -> ())
-
+    
     func delete<T: NSManagedObject>(object: T, _ completion: () -> ())
 }
 
-struct MemoItemDataStoreImpl: MemoItemDataStore {
-    func create<T>(entityName: String, _ completion: (Result<T, Error>) -> ()) where T : NSManagedObject {
+public struct MemoItemDataStoreImpl: MemoItemDataStore {
+    
+    public init() {}
+    
+    public func create<T>(entityName: String, _ completion: (Result<T, Error>) -> ()) where T : NSManagedObject {
         let context = CoreDataManager.shared.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: entityName, in: context)
         guard let memoEntity = entity else {
@@ -40,9 +42,13 @@ struct MemoItemDataStoreImpl: MemoItemDataStore {
         }
         return completion(.success(object))
     }
-
+    
     @discardableResult
-    func save(context: NSManagedObjectContext) -> Result<Void, Error> {
+    public func save<T>(object: T) -> Result<Void, Error> where T : NSManagedObject {
+        guard let context = object.managedObjectContext else {
+            return .failure(CoreDataError.notFoundContext)
+        }
+        
         if context.hasChanges {
             do {
                 try context.save()
@@ -53,10 +59,22 @@ struct MemoItemDataStoreImpl: MemoItemDataStore {
         return .success(())
     }
 
-    func fetchArray<T>(predicates: [NSPredicate],
-                       sortKey: String, ascending: Bool,
-                       logicalType: NSCompoundPredicate.LogicalType,
-                       _ completion: (Result<[T], Error>) -> ()) where T : NSManagedObject {
+    @discardableResult
+    public func save(context: NSManagedObjectContext) -> Result<Void, Error> {
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                return .failure(error)
+            }
+        }
+        return .success(())
+    }
+
+    public func fetchArray<T>(predicates: [NSPredicate],
+                              sortKey: String, ascending: Bool,
+                              logicalType: NSCompoundPredicate.LogicalType,
+                              _ completion: (Result<[T], Error>) -> ()) where T : NSManagedObject {
         let context = CoreDataManager.shared.persistentContainer.viewContext
         guard let fetchRequest: NSFetchRequest<T> = T.fetchRequest() as? NSFetchRequest<T> else {
             completion(.failure(CoreDataError.failedPrepareRequest))
@@ -65,12 +83,12 @@ struct MemoItemDataStoreImpl: MemoItemDataStore {
         let sortDescriptor = NSSortDescriptor(key: sortKey, ascending: ascending)
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.predicate = NSCompoundPredicate(type: logicalType, subpredicates: predicates)
-
+        
         let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                            managedObjectContext: context,
                                                            sectionNameKeyPath: nil,
                                                            cacheName: nil)
-
+        
         do {
             try resultsController.performFetch()
             completion(.success(resultsController.fetchedObjects ?? []))
@@ -78,8 +96,8 @@ struct MemoItemDataStoreImpl: MemoItemDataStore {
             completion(.failure(CoreDataError.failedFetchRequest))
         }
     }
-
-    func execute<R: NSPersistentStoreRequest>(request: R, _ completion: (Result<Void, Error>) -> ()) {
+    
+    public func execute<R: NSPersistentStoreRequest>(request: R, _ completion: (Result<Void, Error>) -> ()) {
         let context = CoreDataManager.shared.persistentContainer.viewContext
         do {
             try context.execute(request)
@@ -88,8 +106,8 @@ struct MemoItemDataStoreImpl: MemoItemDataStore {
             return completion(.failure(CoreDataError.failedExecuteStoreRequest))
         }
     }
-
-    func delete<T>(object: T, _ completion: () -> ()) where T : NSManagedObject {
+    
+    public func delete<T>(object: T, _ completion: () -> ()) where T : NSManagedObject {
         let context = CoreDataManager.shared.persistentContainer.viewContext
         context.performAndWait {
             context.delete(object)

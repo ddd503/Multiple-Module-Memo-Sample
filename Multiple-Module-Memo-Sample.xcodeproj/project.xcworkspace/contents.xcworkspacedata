@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Multiple-Module-Memo-Sample.xcodeproj">
+      location = "self:">
    </FileRef>
 </Workspace>
