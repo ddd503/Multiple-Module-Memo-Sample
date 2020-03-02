@@ -233,14 +233,12 @@
 		45BC96FA2402280200445A53 /* Multiple-Module-Memo-Sample */ = {
 			isa = PBXGroup;
 			children = (
-				45EB4118240A6F3C0060A6EC /* Translater */,
-				45EB4115240A6E4E0060A6EC /* ValueObject */,
-				4562B6D42408033C001FB8BA /* DI */,
 				3D0E647EBA10BD8D023DF7C2 /* View */,
 				3D0E6E4BF59D7CA8C001A02F /* Presenter */,
+				45BF8C69240D5E97008A57AB /* Util */,
+				45EB4115240A6E4E0060A6EC /* ValueObject */,
 				45BC9722240228FF00445A53 /* Startup */,
 				45BC9721240228FC00445A53 /* Other */,
-				3D0E6BE57CBDE7B3E8F4195B /* Extension */,
 			);
 			path = "Multiple-Module-Memo-Sample";
 			sourceTree = "<group>";
@@ -361,6 +359,16 @@
 				45BF8C33240BA2F2008A57AB /* MemoItemRepositoryMock.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		45BF8C69240D5E97008A57AB /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				45EB4118240A6F3C0060A6EC /* Translater */,
+				4562B6D42408033C001FB8BA /* DI */,
+				3D0E6BE57CBDE7B3E8F4195B /* Extension */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		45EB4115240A6E4E0060A6EC /* ValueObject */ = {
