@@ -283,7 +283,7 @@ extension MemoListPresenterTest: MemoListPresenterOutputs {
     func updateButtonTitle(title: String) {
         switch testExpectation.description {
         case "通常モードから編集モードへの切り替え時に適切なOutputが走るか":
-            XCTAssertEqual(title, "全て削除")
+            XCTAssertEqual(title, "すべて削除")
             testExpectation.fulfill()
         case "編集モードから通常モードへの切り替え時に適切なOutputが走るか":
             XCTAssertEqual(title, "メモ追加")
