@@ -7,7 +7,6 @@
 //
 
 import Foundation
-
 import Data
 
 final class Translater {

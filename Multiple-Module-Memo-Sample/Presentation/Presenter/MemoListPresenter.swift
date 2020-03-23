@@ -48,7 +48,7 @@ final class MemoListPresenter: MemoListPresenterInputs {
         didSet {
             // 編集モード切り替え
             view?.updateTableViewIsEditing(tableViewEditing)
-            view?.updateButtonTitle(title: tableViewEditing ? "全て削除" : "メモ追加")
+            view?.updateButtonTitle(title: tableViewEditing ? "すべて削除" : "メモ追加")
         }
     }
     
