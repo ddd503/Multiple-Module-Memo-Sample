@@ -1,4 +1,4 @@
-language: ruby
-rvm:
- - 2.2
- - jruby
+osx_image: xcode11.3
+language: swift
+script:
+- fastlane tests_master
