@@ -15,3 +15,4 @@
 | Xcode | 11.3.1 |
 | Architecture | MVP |
 | DB | CoreData |
+| CI | Travis CI |
