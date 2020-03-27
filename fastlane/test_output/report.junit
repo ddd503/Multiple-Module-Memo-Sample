@@ -1,2 +1,41 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<testsuites tests='0' failures='0'/>
+<testsuites name='DataTests.xctest' tests='30' failures='0'>
+  <testsuite name='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' tests='7' failures='0'>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' name='test_didChangeTextView_TextView編集時に適切なOutputが走るか_文字数が0から増えた時' time='0.002'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' name='test_didChangeTextView_TextView編集時に適切なOutputが走るか_文字数が0になった時' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' name='test_showErrorAlert_異常系である新規メモの作成に失敗した時に適切なOutputが走るか' time='0.007'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' name='test_tappedDoneButton_didSaveMemo_Doneボタンタップ時に適切なOutputが走るか_新規メモ作成時' time='0.003'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' name='test_tappedDoneButton_didSaveMemo_Doneボタンタップ時に適切なOutputが走るか_既存メモ編集時' time='0.002'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' name='test_viewDidLoad_画面表示時に適切なOutputが走るか_新規メモ作成時' time='0.002'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' name='test_viewDidLoad_画面表示時に適切なOutputが走るか_既存メモ編集時' time='0.001'/>
+  </testsuite>
+  <testsuite name='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' tests='12' failures='0'>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_deleteMemo_メモ削除動作時に適切なOutputが走るか' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_didSaveMemo_メモ保存完了時に適切なOutputが走るか' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_didSelectItem_既存メモタップ時に適切なOutputが走るか' time='0.002'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_memos_メモリスト更新時に適切なOutputが走るか' time='0.002'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_showErrorAlert_異常系であるメモの削除に失敗した時に適切なOutputが走るか' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_tableViewEditing_編集モードから通常モードへの切り替え時に適切なOutputが走るか' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_tableViewEditing_通常モードから編集モードへの切り替え時に適切なOutputが走るか' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_tappedActionSheet_アクションシートタップ時に適切なOutputが走るか' time='0.003'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_tappedUnderRightButton_右下ボタンタップ時に適切なOutputが走るか_編集モード時' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_tappedUnderRightButton_右下ボタンタップ時に適切なOutputが走るか_非編集モード時' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_viewDidLoad_画面表示時viewDidLoadに適切なOutputが走るか' time='0.004'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_viewWillAppear_画面表示時viewWillAppearに適切なOutputが走るか' time='0.001'/>
+  </testsuite>
+  <testsuite name='DataTests.MemoItemDataStoreTest' tests='4' failures='0'>
+    <testcase classname='DataTests.MemoItemDataStoreTest' name='test_create_任意のEntityを新規作成できること' time='0.063'/>
+    <testcase classname='DataTests.MemoItemDataStoreTest' name='test_delete_指定した1件のEntityを削除できること' time='0.055'/>
+    <testcase classname='DataTests.MemoItemDataStoreTest' name='test_execute_リクエストが実行されていること' time='0.481'/>
+    <testcase classname='DataTests.MemoItemDataStoreTest' name='test_fetchArray_条件を指定してEntityの配列を取得できること' time='0.015'/>
+  </testsuite>
+  <testsuite name='DataTests.MemoItemRepositoryTest' tests='7' failures='0'>
+    <testcase classname='DataTests.MemoItemRepositoryTest' name='test_countAllMemoItems_保存されているメモの総数を取得できること' time='0.130'/>
+    <testcase classname='DataTests.MemoItemRepositoryTest' name='test_createMemoItem_1件のメモを新規作成できること' time='0.002'/>
+    <testcase classname='DataTests.MemoItemRepositoryTest' name='test_deleteAllMemoItems_保存されているメモを全て削除できること' time='0.087'/>
+    <testcase classname='DataTests.MemoItemRepositoryTest' name='test_deleteMemoItem_ID指定で1件のメモを削除できること' time='0.005'/>
+    <testcase classname='DataTests.MemoItemRepositoryTest' name='test_readAllMemoItems_保存中のメモを全件取得できること' time='0.114'/>
+    <testcase classname='DataTests.MemoItemRepositoryTest' name='test_readMemoItem_ID指定で特定のメモを1件取得できること' time='0.005'/>
+    <testcase classname='DataTests.MemoItemRepositoryTest' name='test_updateMemoItem_メモ内容を更新できること' time='0.013'/>
+  </testsuite>
+</testsuites>
