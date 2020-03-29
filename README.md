@@ -18,5 +18,5 @@
 | Xcode | 11.3.1 |
 | Architecture | MVP |
 | DB | CoreData |
-| CI | Travis CI |
-| Coverage | Codecov |
+| CI | [Travis CI](https://travis-ci.org/) |
+| Coverage | [Codecov](https://codecov.io/) |
