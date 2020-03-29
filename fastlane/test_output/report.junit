@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites name='Multiple-Module-Memo-SampleTests.xctest' tests='19' failures='0'>
+  <testsuite name='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' tests='7' failures='0'>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' name='test_didChangeTextView_TextView編集時に適切なOutputが走るか_文字数が0から増えた時' time='0.002'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' name='test_didChangeTextView_TextView編集時に適切なOutputが走るか_文字数が0になった時' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' name='test_showErrorAlert_異常系である新規メモの作成に失敗した時に適切なOutputが走るか' time='0.007'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' name='test_tappedDoneButton_didSaveMemo_Doneボタンタップ時に適切なOutputが走るか_新規メモ作成時' time='0.004'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' name='test_tappedDoneButton_didSaveMemo_Doneボタンタップ時に適切なOutputが走るか_既存メモ編集時' time='0.002'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' name='test_viewDidLoad_画面表示時に適切なOutputが走るか_新規メモ作成時' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoDetailPresenterTest' name='test_viewDidLoad_画面表示時に適切なOutputが走るか_既存メモ編集時' time='0.001'/>
+  </testsuite>
+  <testsuite name='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' tests='12' failures='0'>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_deleteMemo_メモ削除動作時に適切なOutputが走るか' time='0.002'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_didSaveMemo_メモ保存完了時に適切なOutputが走るか' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_didSelectItem_既存メモタップ時に適切なOutputが走るか' time='0.002'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_memos_メモリスト更新時に適切なOutputが走るか' time='0.002'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_showErrorAlert_異常系であるメモの削除に失敗した時に適切なOutputが走るか' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_tableViewEditing_編集モードから通常モードへの切り替え時に適切なOutputが走るか' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_tableViewEditing_通常モードから編集モードへの切り替え時に適切なOutputが走るか' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_tappedActionSheet_アクションシートタップ時に適切なOutputが走るか' time='0.002'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_tappedUnderRightButton_右下ボタンタップ時に適切なOutputが走るか_編集モード時' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_tappedUnderRightButton_右下ボタンタップ時に適切なOutputが走るか_非編集モード時' time='0.001'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_viewDidLoad_画面表示時viewDidLoadに適切なOutputが走るか' time='0.002'/>
+    <testcase classname='Multiple_Module_Memo_SampleTests.MemoListPresenterTest' name='test_viewWillAppear_画面表示時viewWillAppearに適切なOutputが走るか' time='0.001'/>
+  </testsuite>
+</testsuites>
