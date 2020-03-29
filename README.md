@@ -19,3 +19,4 @@
 | Architecture | MVP |
 | DB | CoreData |
 | CI | Travis CI |
+| Coverage | Codecov |
