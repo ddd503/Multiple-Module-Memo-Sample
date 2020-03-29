@@ -1,4 +1,7 @@
 # Multiple-Module-Memo-Sample
+
+[![Build Status](https://travis-ci.org/ddd503/Multiple-Module-Memo-Sample.svg?branch=master)](https://travis-ci.org/ddd503/Multiple-Module-Memo-Sample) [![codecov](https://codecov.io/gh/ddd503/Multiple-Module-Memo-Sample/branch/master/graph/badge.svg)](https://codecov.io/gh/ddd503/Multiple-Module-Memo-Sample)
+
 マルチモジュール化を行ったサンプルアプリ（メモ帳アプリ）  
 ※ Data層をEmbedded Frameworkとして外部モジュールに切り出しました。
 
@@ -16,3 +19,4 @@
 | Architecture | MVP |
 | DB | CoreData |
 | CI | Travis CI |
+| Coverage | Codecov |
